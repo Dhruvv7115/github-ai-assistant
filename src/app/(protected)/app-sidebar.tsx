@@ -14,13 +14,16 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useProjects } from "@/hooks/use-projects";
 import { cn } from "@/lib/utils";
+import { api } from "@/trpc/react";
 import {
   Bot,
   CreditCard,
   GitBranch,
   Github,
   LayoutDashboard,
+  Loader2,
   Plus,
   Presentation,
 } from "lucide-react";
@@ -34,14 +37,8 @@ const items = [
   { title: "Billings", href: "/billings", icon: CreditCard },
 ];
 
-const projects = [
-  { name: "Project 1", href: "/projects/1" },
-  { name: "Project 2", href: "/projects/2" },
-  { name: "Project 3", href: "/projects/3" },
-  { name: "Project 4", href: "/projects/4" },
-  { name: "Project 5", href: "/projects/5" },
-];
 export default function AppSidebar() {
+  const { projects, isLoading, projectId, setProjectId } = useProjects();
   const pathname = usePathname();
   const { open } = useSidebar();
   return (
@@ -57,7 +54,7 @@ export default function AppSidebar() {
             <SidebarMenuButton>
               <div
                 className={cn(
-                  "flex w-full items-center transition-all duration-200 py-2",
+                  "flex w-full items-center py-2 transition-all duration-200",
                   {
                     "justify-start gap-2": open,
                     "justify-center": !open,
@@ -101,28 +98,38 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {projects.map((project) => (
-                <SidebarMenuItem key={project.name}>
-                  <SidebarMenuButton asChild>
-                    <div>
-                      <div
-                        className={cn(
-                          "text-primary flex size-6 items-center justify-center rounded-sm border text-sm",
-                          {
-                            "bg-primary text-white": true,
-                            // "bg-primary text-white": project.id === projectId,
-                            "opacity-50": false,
-                          },
-                        )}
-                      >
-                        {project.name[0]}
+            <SidebarMenu className="gap-2">
+              {isLoading &&
+                new Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <SidebarMenuItem
+                      key={i}
+                      className="flex h-6 animate-pulse items-center gap-2 rounded bg-black/10"
+                    ></SidebarMenuItem>
+                  ))}
+              {projects.length === 0 && !isLoading && <p>No projects</p>}{" "}
+              {projects.length > 0 &&
+                !isLoading &&
+                projects.map((project) => (
+                  <SidebarMenuItem key={project.name}>
+                    <SidebarMenuButton asChild className="cursor-pointer">
+                      <div onClick={() => setProjectId(project.id)}>
+                        <div
+                          className={cn(
+                            "text-primary flex size-6 items-center justify-center rounded-sm border text-sm",
+                            {
+                              "bg-primary text-white": project.id === projectId,
+                            },
+                          )}
+                        >
+                          {project.name[0]}
+                        </div>
+                        <span>{project.name}</span>
                       </div>
-                      <span>{project.name}</span>
-                    </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               {open && (
                 <SidebarMenuItem>
                   <Button variant="outline" size="sm">
