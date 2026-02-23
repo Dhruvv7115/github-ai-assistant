@@ -6,6 +6,9 @@ import React from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { api } from "@/trpc/react";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 type FormInputs = {
   projectName: string;
@@ -14,20 +17,36 @@ type FormInputs = {
 };
 const CreateProjectPage = () => {
   const { register, handleSubmit, reset } = useForm<FormInputs>();
-
+  const createProject = api.project.create.useMutation();
+  const util = api.useUtils();
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data);
-    alert(JSON.stringify(data, null, 2));
-    // reset();
+    createProject.mutate(
+      {
+        name: data.projectName,
+        repoUrl: data.repoUrl,
+        githubToken: data.githubToken,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Project created successfully");
+          util.project.getAll.invalidate();
+          reset();
+        },
+        onError: () => {
+          toast.error("Something went wrong");
+        },
+      },
+    );
+    reset();
   };
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
-      <div className="mx-auto flex md:flex-row flex-col w-fit items-center gap-4 p-6">
+      <div className="mx-auto flex w-fit flex-col items-center gap-4 p-6 md:flex-row">
         <DotLottieReact
           src="https://lottie.host/c9f38f6f-b4e4-4635-b5c7-3b079fa95bf8/FC65vJvy8P.lottie"
           loop
           autoplay
-          className="h-84 w-1/2 sm:block hidden"
+          className="hidden h-84 w-1/2 sm:block"
         />
         <div className="flex flex-col gap-4">
           <h2 className="text-2xl font-semibold">
@@ -46,14 +65,24 @@ const CreateProjectPage = () => {
             <Input
               className="w-full"
               {...register("repoUrl", { required: true })}
-              placeholder="Repository URL"
+              placeholder="Github Repository URL"
+              type="url"
             />
             <Input
               className="w-full"
               {...register("githubToken")}
               placeholder="Github Token (Optional)"
             />
-            <Button type="submit">Create Project</Button>
+            <Button type="submit" disabled={createProject.isPending}>
+              {createProject.isPending ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Creating...
+                </span>
+              ) : (
+                "Create Project"
+              )}
+            </Button>
           </form>
         </div>
       </div>
