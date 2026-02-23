@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { TRPCReactProvider } from "@/trpc/react";
@@ -12,9 +12,14 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const geist = Geist({
+const fontSans = Inter({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
+  variable: "--font-sans",
+});
+
+const fontSerif = Geist({
+  subsets: ["latin"],
+  variable: "--font-serif",
 });
 
 export default function RootLayout({
@@ -22,7 +27,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${geist.variable}`}>
+      <html
+        lang="en"
+        className={`${fontSans.variable} ${fontSerif.variable} antialiased`}
+      >
         <body>
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </body>

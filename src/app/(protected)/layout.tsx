@@ -1,0 +1,34 @@
+import {
+  SidebarInset,
+  SidebarProvider,
+  Sidebar,
+} from "@/components/ui/sidebar";
+import { UserButton } from "@clerk/nextjs";
+import React from "react";
+import AppSidebar from "./app-sidebar";
+type Props = {
+  children: React.ReactNode;
+};
+const SidebarLayout = ({ children }: Props) => {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+
+      {/* <SidebarInset> */}
+        <main className="w-full m-2">
+          <div className="flex items-center gap-2 border-sidebar-border bg-sidebar border shadow rounded-md py-2 px-4">
+            <div className="ml-auto"></div>
+            <UserButton />
+          </div>
+          <div className="h-4"></div>
+          {/* main content */}
+          <div className="border-sidebar-border bg-sidebar border shadow rounded-md overflow-y-scroll min-h-[calc(100vh-4rem)]">
+            {children}
+          </div>
+        </main> 
+      {/* </SidebarInset> */}
+    </SidebarProvider>
+  );
+};
+
+export default SidebarLayout;
