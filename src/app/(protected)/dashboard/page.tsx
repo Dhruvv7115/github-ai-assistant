@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import CommitLog from "./commit-log";
 
 const DashboardPage = () => {
   const { project } = useProjects();
@@ -18,9 +19,7 @@ const DashboardPage = () => {
           <div className="flex items-center">
             <Github className="size-5 text-white" />
             <div className="ml-3">
-              <p className="text-sm font-medium text-white">
-                {project?.name}
-              </p>
+              <p className="text-sm font-medium text-white">{project?.name}</p>
               <Link
                 href={project?.url ?? ""}
                 className="flex items-center justify-center gap-1 text-xs font-medium text-white/80 hover:text-white hover:underline"
@@ -32,18 +31,15 @@ const DashboardPage = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          TeamMembers
-          InviteButton 
-          ArchiveButton
+          TeamMembers InviteButton ArchiveButton
         </div>
       </div>
       <div className="mt-4">
-        <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-          AskQuestionCard
-          MeetingCard
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
+          AskQuestionCard MeetingCard
         </div>
         <div className="mt-4"></div>
-        CommitLogs
+        <CommitLog />
       </div>
     </div>
   );
