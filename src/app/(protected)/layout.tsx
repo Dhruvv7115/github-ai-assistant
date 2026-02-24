@@ -15,17 +15,17 @@ const SidebarLayout = ({ children }: Props) => {
       <AppSidebar />
 
       {/* <SidebarInset> */}
-        <main className="w-full m-2">
-          <div className="flex items-center gap-2 border-sidebar-border bg-sidebar border shadow rounded-md py-2 px-4">
-            <div className="ml-auto"></div>
-            <UserButton />
-          </div>
-          <div className="h-4"></div>
-          {/* main content */}
-          <div className="border-sidebar-border bg-sidebar border shadow rounded-md overflow-y-scroll min-h-[calc(100vh-4rem)] p-4">
-            {children}
-          </div>
-        </main> 
+      <main className="m-2 w-full">
+        <div className="border-sidebar-border bg-sidebar flex items-center gap-2 rounded-md border px-4 py-2 shadow">
+          <div className="ml-auto"></div>
+          <UserButton />
+        </div>
+        <div className="h-4"></div>
+        {/* main content */}
+        <div className="border-sidebar-border bg-sidebar min-h-[calc(100vh-4rem)] overflow-y-scroll rounded-md border p-4 shadow">
+          {children}
+        </div>
+      </main>
       {/* </SidebarInset> */}
     </SidebarProvider>
   );

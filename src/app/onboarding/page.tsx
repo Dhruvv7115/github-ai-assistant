@@ -32,9 +32,8 @@ const page = async () => {
       imageUrl: user.imageUrl,
       firstName: user.firstName,
       lastName: user.lastName,
-
-    }
-  })
+    },
+  });
 
   return redirect("/dashboard");
 };
