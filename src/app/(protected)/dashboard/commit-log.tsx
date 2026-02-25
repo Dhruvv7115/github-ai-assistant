@@ -32,7 +32,7 @@ const CommitLog = () => {
                 )}
               ></div>
             </div>
-            <div className="flex-auto rounded-md bg-white p-3 ring-1 ring-gray-200 ring-inset">
+            <div className="flex-col w-full rounded-md bg-white p-3 ring-1 ring-gray-200 ring-inset">
               <div className="flex justify-between gap-x-4">
                 <Link
                   href={`${project?.url}/commit/${commit.hash}`}

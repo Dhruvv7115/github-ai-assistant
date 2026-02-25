@@ -6,13 +6,13 @@ import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import CommitLog from "./commit-log";
+import AskQuestionCard from "./ask-question-card";
 
 const DashboardPage = () => {
   const { project } = useProjects();
-  const { user } = useUser();
-  console.log(user);
   return (
     <div>
+      <h1>{project?.name}</h1>
       <div className="flex flex-wrap items-center justify-between gap-y-4">
         <div className="bg-primary w-fit rounded-md px-4 py-3">
           {/* github link of the project */}
@@ -36,7 +36,8 @@ const DashboardPage = () => {
       </div>
       <div className="mt-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-          AskQuestionCard MeetingCard
+          <AskQuestionCard />
+          MeetingCard
         </div>
         <div className="mt-4"></div>
         <CommitLog />
