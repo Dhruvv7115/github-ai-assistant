@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import type { Document } from "@langchain/core/documents";
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
 const genAI = new GoogleGenAI({
@@ -8,7 +9,7 @@ const genAI = new GoogleGenAI({
 export const getAiSummary = async (diff: string): Promise<string> => {
   const response = await genAI.models.generateContent({
     model: "gemini-2.5-flash",
-    
+
     contents: [
       `You are an expert programmer, and you are trying to summarize a git diff.
       Reminders about the git diff format:
@@ -54,3 +55,44 @@ export const getAiSummary = async (diff: string): Promise<string> => {
 //  			});
 
 //  			if (!response.workflow || !response.workflow._id) {`);
+
+export const summarizeCode = async (doc: Document) => {
+  try {
+    const sourceCode = doc.pageContent;
+    const slicedCode = sourceCode.slice(0, 5000);
+    const response = await genAI.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [
+        `you are an intelligent senior software engineer who specializes in onboarding junior software engineers onto projects, you are onboarding a junior software engineer and explaining to them the purpose of ${doc.metadata.source} file. 
+        Here is the code:
+          ---
+          ${slicedCode}
+          ---
+        give a summary no more than 100 words of the code and what it does
+        `,
+      ],
+    });
+
+    return response.text || "";
+  } catch (error) {
+    return "";
+  }
+};
+
+export const getEmbedding = async (summary: string) => {
+  const response = await genAI.models.embedContent({
+    model: "gemini-embedding-001",
+    contents: summary,
+  });
+  return response.embeddings?.[0]?.values ?? [];
+};
+
+// const response = await genAI.models.generateContentStream({
+//   model: "gemini-2.5-flash",
+//   contents: "Write a story about a magic backpack.",
+// });
+// let text = "";
+// for await (const chunk of response) {
+//   console.log(chunk.text);
+//   text += chunk.text;
+// }
