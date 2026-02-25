@@ -15,6 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useProjects } from "@/hooks/use-projects";
+import { useRefetch } from "@/hooks/use-refetch";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import {
@@ -41,6 +42,7 @@ export default function AppSidebar() {
   const { projects, isLoading, projectId, setProjectId } = useProjects();
   const pathname = usePathname();
   const { open } = useSidebar();
+
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader

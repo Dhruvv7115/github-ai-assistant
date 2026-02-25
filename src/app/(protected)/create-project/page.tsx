@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useRefetch } from "@/hooks/use-refetch";
 
 type FormInputs = {
   projectName: string;
@@ -18,7 +19,8 @@ type FormInputs = {
 const CreateProjectPage = () => {
   const { register, handleSubmit, reset } = useForm<FormInputs>();
   const createProject = api.project.create.useMutation();
-  const util = api.useUtils();
+  const refetch = useRefetch();
+
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createProject.mutate(
       {
@@ -29,7 +31,7 @@ const CreateProjectPage = () => {
       {
         onSuccess: () => {
           toast.success("Project created successfully");
-          util.project.getAll.invalidate();
+          refetch();
           reset();
         },
         onError: () => {
