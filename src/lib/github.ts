@@ -31,7 +31,7 @@ export const getCommitHashes = async (
       new Date(a.commit.author?.date || "").getTime(),
   );
 
-  return sortedCommits.slice(0, 5).map((commit) => ({
+  return sortedCommits.slice(0, 3).map((commit) => ({
     hash: commit?.sha ?? "",
     message: commit?.commit?.message ?? "",
     authorName: commit?.commit?.author?.name ?? "",
@@ -51,6 +51,12 @@ export const pollCommits = async (projectId: string) => {
   for (const commit of unprocessedCommits) {
     const summary = await summarizeCommit(githubUrl, commit.hash);
     summaryResponses.push(summary);
+    await new Promise((resolve) => {
+      console.log(
+        `processed ${unprocessedCommits.indexOf(commit)} of ${unprocessedCommits.length} commit, waiting for 5 seconds`,
+      );
+      setTimeout(resolve, 5000);
+    });
   }
   const commits = unprocessedCommits.map(async (commit, index) => {
     console.log("processing commit ", index);

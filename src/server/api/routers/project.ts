@@ -1,6 +1,7 @@
 import z from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { pollCommits } from "@/lib/github";
+import { indexGithubRepo } from "@/lib/github-loader";
 
 export const projectRouter = createTRPCRouter({
   create: protectedProcedure
@@ -23,6 +24,9 @@ export const projectRouter = createTRPCRouter({
           },
         },
       });
+      await indexGithubRepo(project.id, input.repoUrl, input.githubToken);
+      console.log("indexed repo, starting polling commits in 10 seconds");
+      await new Promise((resolve) => setTimeout(resolve, 10000));
       await pollCommits(project.id);
       return project;
     }),
