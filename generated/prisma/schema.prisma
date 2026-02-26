@@ -20,6 +20,7 @@ model User {
   email          String          @unique
   credits        Int             @default(150)
   userToProjects UserToProject[]
+  questionsAsked Qna[]
 }
 
 model Project {
@@ -32,6 +33,7 @@ model Project {
   userToProjects       UserToProject[]
   commits              Commit[]
   sourceCodeEmbeddings SourceCodeEmbedding[]
+  savedQuestions       Qna[]
 }
 
 model UserToProject {
@@ -71,4 +73,19 @@ model SourceCodeEmbedding {
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Qna {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  question  String
+  answer    String
+
+  fileReferences Json?
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

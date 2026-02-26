@@ -38,6 +38,11 @@ export type Commit = $Result.DefaultSelection<Prisma.$CommitPayload>
  * 
  */
 export type SourceCodeEmbedding = $Result.DefaultSelection<Prisma.$SourceCodeEmbeddingPayload>
+/**
+ * Model Qna
+ * 
+ */
+export type Qna = $Result.DefaultSelection<Prisma.$QnaPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -206,6 +211,16 @@ export class PrismaClient<
     * ```
     */
   get sourceCodeEmbedding(): Prisma.SourceCodeEmbeddingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.qna`: Exposes CRUD operations for the **Qna** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Qnas
+    * const qnas = await prisma.qna.findMany()
+    * ```
+    */
+  get qna(): Prisma.QnaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -651,7 +666,8 @@ export namespace Prisma {
     Project: 'Project',
     UserToProject: 'UserToProject',
     Commit: 'Commit',
-    SourceCodeEmbedding: 'SourceCodeEmbedding'
+    SourceCodeEmbedding: 'SourceCodeEmbedding',
+    Qna: 'Qna'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -670,7 +686,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "project" | "userToProject" | "commit" | "sourceCodeEmbedding"
+      modelProps: "user" | "project" | "userToProject" | "commit" | "sourceCodeEmbedding" | "qna"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1044,6 +1060,80 @@ export namespace Prisma {
           }
         }
       }
+      Qna: {
+        payload: Prisma.$QnaPayload<ExtArgs>
+        fields: Prisma.QnaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.QnaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.QnaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          findFirst: {
+            args: Prisma.QnaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.QnaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          findMany: {
+            args: Prisma.QnaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>[]
+          }
+          create: {
+            args: Prisma.QnaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          createMany: {
+            args: Prisma.QnaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.QnaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>[]
+          }
+          delete: {
+            args: Prisma.QnaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          update: {
+            args: Prisma.QnaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          deleteMany: {
+            args: Prisma.QnaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.QnaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.QnaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>[]
+          }
+          upsert: {
+            args: Prisma.QnaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QnaPayload>
+          }
+          aggregate: {
+            args: Prisma.QnaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateQna>
+          }
+          groupBy: {
+            args: Prisma.QnaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<QnaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.QnaCountArgs<ExtArgs>
+            result: $Utils.Optional<QnaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1145,6 +1235,7 @@ export namespace Prisma {
     userToProject?: UserToProjectOmit
     commit?: CommitOmit
     sourceCodeEmbedding?: SourceCodeEmbeddingOmit
+    qna?: QnaOmit
   }
 
   /* Types for Logging */
@@ -1226,10 +1317,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     userToProjects: number
+    questionsAsked: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | UserCountOutputTypeCountUserToProjectsArgs
+    questionsAsked?: boolean | UserCountOutputTypeCountQuestionsAskedArgs
   }
 
   // Custom InputTypes
@@ -1250,6 +1343,13 @@ export namespace Prisma {
     where?: UserToProjectWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountQuestionsAskedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QnaWhereInput
+  }
+
 
   /**
    * Count Type ProjectCountOutputType
@@ -1259,12 +1359,14 @@ export namespace Prisma {
     userToProjects: number
     commits: number
     sourceCodeEmbeddings: number
+    savedQuestions: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | ProjectCountOutputTypeCountUserToProjectsArgs
     commits?: boolean | ProjectCountOutputTypeCountCommitsArgs
     sourceCodeEmbeddings?: boolean | ProjectCountOutputTypeCountSourceCodeEmbeddingsArgs
+    savedQuestions?: boolean | ProjectCountOutputTypeCountSavedQuestionsArgs
   }
 
   // Custom InputTypes
@@ -1297,6 +1399,13 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountSourceCodeEmbeddingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SourceCodeEmbeddingWhereInput
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountSavedQuestionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QnaWhereInput
   }
 
 
@@ -1527,6 +1636,7 @@ export namespace Prisma {
     email?: boolean
     credits?: boolean
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
+    questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1566,6 +1676,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "imageUrl" | "firstName" | "lastName" | "email" | "credits", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
+    questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1575,6 +1686,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       userToProjects: Prisma.$UserToProjectPayload<ExtArgs>[]
+      questionsAsked: Prisma.$QnaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1980,6 +2092,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     userToProjects<T extends User$userToProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$userToProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserToProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    questionsAsked<T extends User$questionsAskedArgs<ExtArgs> = {}>(args?: Subset<T, User$questionsAskedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2429,6 +2542,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.questionsAsked
+   */
+  export type User$questionsAskedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    where?: QnaWhereInput
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    cursor?: QnaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2622,6 +2759,7 @@ export namespace Prisma {
     userToProjects?: boolean | Project$userToProjectsArgs<ExtArgs>
     commits?: boolean | Project$commitsArgs<ExtArgs>
     sourceCodeEmbeddings?: boolean | Project$sourceCodeEmbeddingsArgs<ExtArgs>
+    savedQuestions?: boolean | Project$savedQuestionsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -2657,6 +2795,7 @@ export namespace Prisma {
     userToProjects?: boolean | Project$userToProjectsArgs<ExtArgs>
     commits?: boolean | Project$commitsArgs<ExtArgs>
     sourceCodeEmbeddings?: boolean | Project$sourceCodeEmbeddingsArgs<ExtArgs>
+    savedQuestions?: boolean | Project$savedQuestionsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2668,6 +2807,7 @@ export namespace Prisma {
       userToProjects: Prisma.$UserToProjectPayload<ExtArgs>[]
       commits: Prisma.$CommitPayload<ExtArgs>[]
       sourceCodeEmbeddings: Prisma.$SourceCodeEmbeddingPayload<ExtArgs>[]
+      savedQuestions: Prisma.$QnaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3073,6 +3213,7 @@ export namespace Prisma {
     userToProjects<T extends Project$userToProjectsArgs<ExtArgs> = {}>(args?: Subset<T, Project$userToProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserToProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     commits<T extends Project$commitsArgs<ExtArgs> = {}>(args?: Subset<T, Project$commitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sourceCodeEmbeddings<T extends Project$sourceCodeEmbeddingsArgs<ExtArgs> = {}>(args?: Subset<T, Project$sourceCodeEmbeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SourceCodeEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    savedQuestions<T extends Project$savedQuestionsArgs<ExtArgs> = {}>(args?: Subset<T, Project$savedQuestionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3565,6 +3706,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SourceCodeEmbeddingScalarFieldEnum | SourceCodeEmbeddingScalarFieldEnum[]
+  }
+
+  /**
+   * Project.savedQuestions
+   */
+  export type Project$savedQuestionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    where?: QnaWhereInput
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    cursor?: QnaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
   }
 
   /**
@@ -6834,6 +6999,1107 @@ export namespace Prisma {
 
 
   /**
+   * Model Qna
+   */
+
+  export type AggregateQna = {
+    _count: QnaCountAggregateOutputType | null
+    _min: QnaMinAggregateOutputType | null
+    _max: QnaMaxAggregateOutputType | null
+  }
+
+  export type QnaMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    question: string | null
+    answer: string | null
+    projectId: string | null
+    userId: string | null
+  }
+
+  export type QnaMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    question: string | null
+    answer: string | null
+    projectId: string | null
+    userId: string | null
+  }
+
+  export type QnaCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    question: number
+    answer: number
+    fileReferences: number
+    projectId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type QnaMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    question?: true
+    answer?: true
+    projectId?: true
+    userId?: true
+  }
+
+  export type QnaMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    question?: true
+    answer?: true
+    projectId?: true
+    userId?: true
+  }
+
+  export type QnaCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    question?: true
+    answer?: true
+    fileReferences?: true
+    projectId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type QnaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Qna to aggregate.
+     */
+    where?: QnaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Qnas to fetch.
+     */
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QnaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Qnas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Qnas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Qnas
+    **/
+    _count?: true | QnaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QnaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QnaMaxAggregateInputType
+  }
+
+  export type GetQnaAggregateType<T extends QnaAggregateArgs> = {
+        [P in keyof T & keyof AggregateQna]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQna[P]>
+      : GetScalarType<T[P], AggregateQna[P]>
+  }
+
+
+
+
+  export type QnaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QnaWhereInput
+    orderBy?: QnaOrderByWithAggregationInput | QnaOrderByWithAggregationInput[]
+    by: QnaScalarFieldEnum[] | QnaScalarFieldEnum
+    having?: QnaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QnaCountAggregateInputType | true
+    _min?: QnaMinAggregateInputType
+    _max?: QnaMaxAggregateInputType
+  }
+
+  export type QnaGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    question: string
+    answer: string
+    fileReferences: JsonValue | null
+    projectId: string
+    userId: string
+    _count: QnaCountAggregateOutputType | null
+    _min: QnaMinAggregateOutputType | null
+    _max: QnaMaxAggregateOutputType | null
+  }
+
+  type GetQnaGroupByPayload<T extends QnaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<QnaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QnaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QnaGroupByOutputType[P]>
+            : GetScalarType<T[P], QnaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QnaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    question?: boolean
+    answer?: boolean
+    fileReferences?: boolean
+    projectId?: boolean
+    userId?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["qna"]>
+
+  export type QnaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    question?: boolean
+    answer?: boolean
+    fileReferences?: boolean
+    projectId?: boolean
+    userId?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["qna"]>
+
+  export type QnaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    question?: boolean
+    answer?: boolean
+    fileReferences?: boolean
+    projectId?: boolean
+    userId?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["qna"]>
+
+  export type QnaSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    question?: boolean
+    answer?: boolean
+    fileReferences?: boolean
+    projectId?: boolean
+    userId?: boolean
+  }
+
+  export type QnaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "question" | "answer" | "fileReferences" | "projectId" | "userId", ExtArgs["result"]["qna"]>
+  export type QnaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type QnaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type QnaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $QnaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Qna"
+    objects: {
+      project: Prisma.$ProjectPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      question: string
+      answer: string
+      fileReferences: Prisma.JsonValue | null
+      projectId: string
+      userId: string
+    }, ExtArgs["result"]["qna"]>
+    composites: {}
+  }
+
+  type QnaGetPayload<S extends boolean | null | undefined | QnaDefaultArgs> = $Result.GetResult<Prisma.$QnaPayload, S>
+
+  type QnaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<QnaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: QnaCountAggregateInputType | true
+    }
+
+  export interface QnaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Qna'], meta: { name: 'Qna' } }
+    /**
+     * Find zero or one Qna that matches the filter.
+     * @param {QnaFindUniqueArgs} args - Arguments to find a Qna
+     * @example
+     * // Get one Qna
+     * const qna = await prisma.qna.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends QnaFindUniqueArgs>(args: SelectSubset<T, QnaFindUniqueArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Qna that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {QnaFindUniqueOrThrowArgs} args - Arguments to find a Qna
+     * @example
+     * // Get one Qna
+     * const qna = await prisma.qna.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends QnaFindUniqueOrThrowArgs>(args: SelectSubset<T, QnaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Qna that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaFindFirstArgs} args - Arguments to find a Qna
+     * @example
+     * // Get one Qna
+     * const qna = await prisma.qna.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends QnaFindFirstArgs>(args?: SelectSubset<T, QnaFindFirstArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Qna that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaFindFirstOrThrowArgs} args - Arguments to find a Qna
+     * @example
+     * // Get one Qna
+     * const qna = await prisma.qna.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends QnaFindFirstOrThrowArgs>(args?: SelectSubset<T, QnaFindFirstOrThrowArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Qnas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Qnas
+     * const qnas = await prisma.qna.findMany()
+     * 
+     * // Get first 10 Qnas
+     * const qnas = await prisma.qna.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const qnaWithIdOnly = await prisma.qna.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends QnaFindManyArgs>(args?: SelectSubset<T, QnaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Qna.
+     * @param {QnaCreateArgs} args - Arguments to create a Qna.
+     * @example
+     * // Create one Qna
+     * const Qna = await prisma.qna.create({
+     *   data: {
+     *     // ... data to create a Qna
+     *   }
+     * })
+     * 
+     */
+    create<T extends QnaCreateArgs>(args: SelectSubset<T, QnaCreateArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Qnas.
+     * @param {QnaCreateManyArgs} args - Arguments to create many Qnas.
+     * @example
+     * // Create many Qnas
+     * const qna = await prisma.qna.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends QnaCreateManyArgs>(args?: SelectSubset<T, QnaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Qnas and returns the data saved in the database.
+     * @param {QnaCreateManyAndReturnArgs} args - Arguments to create many Qnas.
+     * @example
+     * // Create many Qnas
+     * const qna = await prisma.qna.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Qnas and only return the `id`
+     * const qnaWithIdOnly = await prisma.qna.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends QnaCreateManyAndReturnArgs>(args?: SelectSubset<T, QnaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Qna.
+     * @param {QnaDeleteArgs} args - Arguments to delete one Qna.
+     * @example
+     * // Delete one Qna
+     * const Qna = await prisma.qna.delete({
+     *   where: {
+     *     // ... filter to delete one Qna
+     *   }
+     * })
+     * 
+     */
+    delete<T extends QnaDeleteArgs>(args: SelectSubset<T, QnaDeleteArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Qna.
+     * @param {QnaUpdateArgs} args - Arguments to update one Qna.
+     * @example
+     * // Update one Qna
+     * const qna = await prisma.qna.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends QnaUpdateArgs>(args: SelectSubset<T, QnaUpdateArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Qnas.
+     * @param {QnaDeleteManyArgs} args - Arguments to filter Qnas to delete.
+     * @example
+     * // Delete a few Qnas
+     * const { count } = await prisma.qna.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends QnaDeleteManyArgs>(args?: SelectSubset<T, QnaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Qnas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Qnas
+     * const qna = await prisma.qna.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends QnaUpdateManyArgs>(args: SelectSubset<T, QnaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Qnas and returns the data updated in the database.
+     * @param {QnaUpdateManyAndReturnArgs} args - Arguments to update many Qnas.
+     * @example
+     * // Update many Qnas
+     * const qna = await prisma.qna.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Qnas and only return the `id`
+     * const qnaWithIdOnly = await prisma.qna.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends QnaUpdateManyAndReturnArgs>(args: SelectSubset<T, QnaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Qna.
+     * @param {QnaUpsertArgs} args - Arguments to update or create a Qna.
+     * @example
+     * // Update or create a Qna
+     * const qna = await prisma.qna.upsert({
+     *   create: {
+     *     // ... data to create a Qna
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Qna we want to update
+     *   }
+     * })
+     */
+    upsert<T extends QnaUpsertArgs>(args: SelectSubset<T, QnaUpsertArgs<ExtArgs>>): Prisma__QnaClient<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Qnas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaCountArgs} args - Arguments to filter Qnas to count.
+     * @example
+     * // Count the number of Qnas
+     * const count = await prisma.qna.count({
+     *   where: {
+     *     // ... the filter for the Qnas we want to count
+     *   }
+     * })
+    **/
+    count<T extends QnaCountArgs>(
+      args?: Subset<T, QnaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QnaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Qna.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QnaAggregateArgs>(args: Subset<T, QnaAggregateArgs>): Prisma.PrismaPromise<GetQnaAggregateType<T>>
+
+    /**
+     * Group by Qna.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QnaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QnaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QnaGroupByArgs['orderBy'] }
+        : { orderBy?: QnaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QnaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQnaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Qna model
+   */
+  readonly fields: QnaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Qna.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__QnaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Qna model
+   */
+  interface QnaFieldRefs {
+    readonly id: FieldRef<"Qna", 'String'>
+    readonly createdAt: FieldRef<"Qna", 'DateTime'>
+    readonly updatedAt: FieldRef<"Qna", 'DateTime'>
+    readonly question: FieldRef<"Qna", 'String'>
+    readonly answer: FieldRef<"Qna", 'String'>
+    readonly fileReferences: FieldRef<"Qna", 'Json'>
+    readonly projectId: FieldRef<"Qna", 'String'>
+    readonly userId: FieldRef<"Qna", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Qna findUnique
+   */
+  export type QnaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter, which Qna to fetch.
+     */
+    where: QnaWhereUniqueInput
+  }
+
+  /**
+   * Qna findUniqueOrThrow
+   */
+  export type QnaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter, which Qna to fetch.
+     */
+    where: QnaWhereUniqueInput
+  }
+
+  /**
+   * Qna findFirst
+   */
+  export type QnaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter, which Qna to fetch.
+     */
+    where?: QnaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Qnas to fetch.
+     */
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Qnas.
+     */
+    cursor?: QnaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Qnas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Qnas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Qnas.
+     */
+    distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
+  }
+
+  /**
+   * Qna findFirstOrThrow
+   */
+  export type QnaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter, which Qna to fetch.
+     */
+    where?: QnaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Qnas to fetch.
+     */
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Qnas.
+     */
+    cursor?: QnaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Qnas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Qnas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Qnas.
+     */
+    distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
+  }
+
+  /**
+   * Qna findMany
+   */
+  export type QnaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter, which Qnas to fetch.
+     */
+    where?: QnaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Qnas to fetch.
+     */
+    orderBy?: QnaOrderByWithRelationInput | QnaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Qnas.
+     */
+    cursor?: QnaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Qnas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Qnas.
+     */
+    skip?: number
+    distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
+  }
+
+  /**
+   * Qna create
+   */
+  export type QnaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Qna.
+     */
+    data: XOR<QnaCreateInput, QnaUncheckedCreateInput>
+  }
+
+  /**
+   * Qna createMany
+   */
+  export type QnaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Qnas.
+     */
+    data: QnaCreateManyInput | QnaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Qna createManyAndReturn
+   */
+  export type QnaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * The data used to create many Qnas.
+     */
+    data: QnaCreateManyInput | QnaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Qna update
+   */
+  export type QnaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Qna.
+     */
+    data: XOR<QnaUpdateInput, QnaUncheckedUpdateInput>
+    /**
+     * Choose, which Qna to update.
+     */
+    where: QnaWhereUniqueInput
+  }
+
+  /**
+   * Qna updateMany
+   */
+  export type QnaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Qnas.
+     */
+    data: XOR<QnaUpdateManyMutationInput, QnaUncheckedUpdateManyInput>
+    /**
+     * Filter which Qnas to update
+     */
+    where?: QnaWhereInput
+    /**
+     * Limit how many Qnas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Qna updateManyAndReturn
+   */
+  export type QnaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * The data used to update Qnas.
+     */
+    data: XOR<QnaUpdateManyMutationInput, QnaUncheckedUpdateManyInput>
+    /**
+     * Filter which Qnas to update
+     */
+    where?: QnaWhereInput
+    /**
+     * Limit how many Qnas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Qna upsert
+   */
+  export type QnaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Qna to update in case it exists.
+     */
+    where: QnaWhereUniqueInput
+    /**
+     * In case the Qna found by the `where` argument doesn't exist, create a new Qna with this data.
+     */
+    create: XOR<QnaCreateInput, QnaUncheckedCreateInput>
+    /**
+     * In case the Qna was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QnaUpdateInput, QnaUncheckedUpdateInput>
+  }
+
+  /**
+   * Qna delete
+   */
+  export type QnaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+    /**
+     * Filter which Qna to delete.
+     */
+    where: QnaWhereUniqueInput
+  }
+
+  /**
+   * Qna deleteMany
+   */
+  export type QnaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Qnas to delete
+     */
+    where?: QnaWhereInput
+    /**
+     * Limit how many Qnas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Qna without action
+   */
+  export type QnaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Qna
+     */
+    select?: QnaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Qna
+     */
+    omit?: QnaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QnaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6911,12 +8177,34 @@ export namespace Prisma {
   export type SourceCodeEmbeddingScalarFieldEnum = (typeof SourceCodeEmbeddingScalarFieldEnum)[keyof typeof SourceCodeEmbeddingScalarFieldEnum]
 
 
+  export const QnaScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    question: 'question',
+    answer: 'answer',
+    fileReferences: 'fileReferences',
+    projectId: 'projectId',
+    userId: 'userId'
+  };
+
+  export type QnaScalarFieldEnum = (typeof QnaScalarFieldEnum)[keyof typeof QnaScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -6933,6 +8221,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -6983,6 +8280,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -7012,6 +8323,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     credits?: IntFilter<"User"> | number
     userToProjects?: UserToProjectListRelationFilter
+    questionsAsked?: QnaListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7024,6 +8336,7 @@ export namespace Prisma {
     email?: SortOrder
     credits?: SortOrder
     userToProjects?: UserToProjectOrderByRelationAggregateInput
+    questionsAsked?: QnaOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7039,6 +8352,7 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"User"> | string | null
     credits?: IntFilter<"User"> | number
     userToProjects?: UserToProjectListRelationFilter
+    questionsAsked?: QnaListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7084,6 +8398,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectListRelationFilter
     commits?: CommitListRelationFilter
     sourceCodeEmbeddings?: SourceCodeEmbeddingListRelationFilter
+    savedQuestions?: QnaListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -7096,6 +8411,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectOrderByRelationAggregateInput
     commits?: CommitOrderByRelationAggregateInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingOrderByRelationAggregateInput
+    savedQuestions?: QnaOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -7111,6 +8427,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectListRelationFilter
     commits?: CommitListRelationFilter
     sourceCodeEmbeddings?: SourceCodeEmbeddingListRelationFilter
+    savedQuestions?: QnaListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -7331,6 +8648,79 @@ export namespace Prisma {
     projectId?: StringWithAggregatesFilter<"SourceCodeEmbedding"> | string
   }
 
+  export type QnaWhereInput = {
+    AND?: QnaWhereInput | QnaWhereInput[]
+    OR?: QnaWhereInput[]
+    NOT?: QnaWhereInput | QnaWhereInput[]
+    id?: StringFilter<"Qna"> | string
+    createdAt?: DateTimeFilter<"Qna"> | Date | string
+    updatedAt?: DateTimeFilter<"Qna"> | Date | string
+    question?: StringFilter<"Qna"> | string
+    answer?: StringFilter<"Qna"> | string
+    fileReferences?: JsonNullableFilter<"Qna">
+    projectId?: StringFilter<"Qna"> | string
+    userId?: StringFilter<"Qna"> | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type QnaOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    fileReferences?: SortOrderInput | SortOrder
+    projectId?: SortOrder
+    userId?: SortOrder
+    project?: ProjectOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type QnaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: QnaWhereInput | QnaWhereInput[]
+    OR?: QnaWhereInput[]
+    NOT?: QnaWhereInput | QnaWhereInput[]
+    createdAt?: DateTimeFilter<"Qna"> | Date | string
+    updatedAt?: DateTimeFilter<"Qna"> | Date | string
+    question?: StringFilter<"Qna"> | string
+    answer?: StringFilter<"Qna"> | string
+    fileReferences?: JsonNullableFilter<"Qna">
+    projectId?: StringFilter<"Qna"> | string
+    userId?: StringFilter<"Qna"> | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type QnaOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    fileReferences?: SortOrderInput | SortOrder
+    projectId?: SortOrder
+    userId?: SortOrder
+    _count?: QnaCountOrderByAggregateInput
+    _max?: QnaMaxOrderByAggregateInput
+    _min?: QnaMinOrderByAggregateInput
+  }
+
+  export type QnaScalarWhereWithAggregatesInput = {
+    AND?: QnaScalarWhereWithAggregatesInput | QnaScalarWhereWithAggregatesInput[]
+    OR?: QnaScalarWhereWithAggregatesInput[]
+    NOT?: QnaScalarWhereWithAggregatesInput | QnaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Qna"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Qna"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Qna"> | Date | string
+    question?: StringWithAggregatesFilter<"Qna"> | string
+    answer?: StringWithAggregatesFilter<"Qna"> | string
+    fileReferences?: JsonNullableWithAggregatesFilter<"Qna">
+    projectId?: StringWithAggregatesFilter<"Qna"> | string
+    userId?: StringWithAggregatesFilter<"Qna"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     createdAt?: Date | string
@@ -7341,6 +8731,7 @@ export namespace Prisma {
     email: string
     credits?: number
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
+    questionsAsked?: QnaCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7353,6 +8744,7 @@ export namespace Prisma {
     email: string
     credits?: number
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
+    questionsAsked?: QnaUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7365,6 +8757,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
+    questionsAsked?: QnaUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7377,6 +8770,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
+    questionsAsked?: QnaUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7422,6 +8816,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -7434,6 +8829,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -7446,6 +8842,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -7458,6 +8855,7 @@ export namespace Prisma {
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -7686,6 +9084,81 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type QnaCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    project: ProjectCreateNestedOneWithoutSavedQuestionsInput
+    user: UserCreateNestedOneWithoutQuestionsAskedInput
+  }
+
+  export type QnaUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId: string
+    userId: string
+  }
+
+  export type QnaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    project?: ProjectUpdateOneRequiredWithoutSavedQuestionsNestedInput
+    user?: UserUpdateOneRequiredWithoutQuestionsAskedNestedInput
+  }
+
+  export type QnaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QnaCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId: string
+    userId: string
+  }
+
+  export type QnaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type QnaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7744,12 +9217,22 @@ export namespace Prisma {
     none?: UserToProjectWhereInput
   }
 
+  export type QnaListRelationFilter = {
+    every?: QnaWhereInput
+    some?: QnaWhereInput
+    none?: QnaWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type UserToProjectOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QnaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8033,6 +9516,86 @@ export namespace Prisma {
     summary?: SortOrder
     projectId?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type QnaCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    fileReferences?: SortOrder
+    projectId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type QnaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    projectId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type QnaMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    projectId?: SortOrder
+    userId?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
 
   export type UserToProjectCreateNestedManyWithoutUserInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
@@ -8041,11 +9604,25 @@ export namespace Prisma {
     connect?: UserToProjectWhereUniqueInput | UserToProjectWhereUniqueInput[]
   }
 
+  export type QnaCreateNestedManyWithoutUserInput = {
+    create?: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput> | QnaCreateWithoutUserInput[] | QnaUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutUserInput | QnaCreateOrConnectWithoutUserInput[]
+    createMany?: QnaCreateManyUserInputEnvelope
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+  }
+
   export type UserToProjectUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutUserInput | UserToProjectCreateOrConnectWithoutUserInput[]
     createMany?: UserToProjectCreateManyUserInputEnvelope
     connect?: UserToProjectWhereUniqueInput | UserToProjectWhereUniqueInput[]
+  }
+
+  export type QnaUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput> | QnaCreateWithoutUserInput[] | QnaUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutUserInput | QnaCreateOrConnectWithoutUserInput[]
+    createMany?: QnaCreateManyUserInputEnvelope
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8082,6 +9659,20 @@ export namespace Prisma {
     deleteMany?: UserToProjectScalarWhereInput | UserToProjectScalarWhereInput[]
   }
 
+  export type QnaUpdateManyWithoutUserNestedInput = {
+    create?: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput> | QnaCreateWithoutUserInput[] | QnaUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutUserInput | QnaCreateOrConnectWithoutUserInput[]
+    upsert?: QnaUpsertWithWhereUniqueWithoutUserInput | QnaUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: QnaCreateManyUserInputEnvelope
+    set?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    disconnect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    delete?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    update?: QnaUpdateWithWhereUniqueWithoutUserInput | QnaUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: QnaUpdateManyWithWhereWithoutUserInput | QnaUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
+  }
+
   export type UserToProjectUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutUserInput | UserToProjectCreateOrConnectWithoutUserInput[]
@@ -8094,6 +9685,20 @@ export namespace Prisma {
     update?: UserToProjectUpdateWithWhereUniqueWithoutUserInput | UserToProjectUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserToProjectUpdateManyWithWhereWithoutUserInput | UserToProjectUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserToProjectScalarWhereInput | UserToProjectScalarWhereInput[]
+  }
+
+  export type QnaUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput> | QnaCreateWithoutUserInput[] | QnaUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutUserInput | QnaCreateOrConnectWithoutUserInput[]
+    upsert?: QnaUpsertWithWhereUniqueWithoutUserInput | QnaUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: QnaCreateManyUserInputEnvelope
+    set?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    disconnect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    delete?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    update?: QnaUpdateWithWhereUniqueWithoutUserInput | QnaUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: QnaUpdateManyWithWhereWithoutUserInput | QnaUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
   }
 
   export type UserToProjectCreateNestedManyWithoutProjectInput = {
@@ -8117,6 +9722,13 @@ export namespace Prisma {
     connect?: SourceCodeEmbeddingWhereUniqueInput | SourceCodeEmbeddingWhereUniqueInput[]
   }
 
+  export type QnaCreateNestedManyWithoutProjectInput = {
+    create?: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput> | QnaCreateWithoutProjectInput[] | QnaUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutProjectInput | QnaCreateOrConnectWithoutProjectInput[]
+    createMany?: QnaCreateManyProjectInputEnvelope
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+  }
+
   export type UserToProjectUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<UserToProjectCreateWithoutProjectInput, UserToProjectUncheckedCreateWithoutProjectInput> | UserToProjectCreateWithoutProjectInput[] | UserToProjectUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutProjectInput | UserToProjectCreateOrConnectWithoutProjectInput[]
@@ -8136,6 +9748,13 @@ export namespace Prisma {
     connectOrCreate?: SourceCodeEmbeddingCreateOrConnectWithoutProjectInput | SourceCodeEmbeddingCreateOrConnectWithoutProjectInput[]
     createMany?: SourceCodeEmbeddingCreateManyProjectInputEnvelope
     connect?: SourceCodeEmbeddingWhereUniqueInput | SourceCodeEmbeddingWhereUniqueInput[]
+  }
+
+  export type QnaUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput> | QnaCreateWithoutProjectInput[] | QnaUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutProjectInput | QnaCreateOrConnectWithoutProjectInput[]
+    createMany?: QnaCreateManyProjectInputEnvelope
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -8184,6 +9803,20 @@ export namespace Prisma {
     deleteMany?: SourceCodeEmbeddingScalarWhereInput | SourceCodeEmbeddingScalarWhereInput[]
   }
 
+  export type QnaUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput> | QnaCreateWithoutProjectInput[] | QnaUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutProjectInput | QnaCreateOrConnectWithoutProjectInput[]
+    upsert?: QnaUpsertWithWhereUniqueWithoutProjectInput | QnaUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: QnaCreateManyProjectInputEnvelope
+    set?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    disconnect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    delete?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    update?: QnaUpdateWithWhereUniqueWithoutProjectInput | QnaUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: QnaUpdateManyWithWhereWithoutProjectInput | QnaUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
+  }
+
   export type UserToProjectUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<UserToProjectCreateWithoutProjectInput, UserToProjectUncheckedCreateWithoutProjectInput> | UserToProjectCreateWithoutProjectInput[] | UserToProjectUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutProjectInput | UserToProjectCreateOrConnectWithoutProjectInput[]
@@ -8224,6 +9857,20 @@ export namespace Prisma {
     update?: SourceCodeEmbeddingUpdateWithWhereUniqueWithoutProjectInput | SourceCodeEmbeddingUpdateWithWhereUniqueWithoutProjectInput[]
     updateMany?: SourceCodeEmbeddingUpdateManyWithWhereWithoutProjectInput | SourceCodeEmbeddingUpdateManyWithWhereWithoutProjectInput[]
     deleteMany?: SourceCodeEmbeddingScalarWhereInput | SourceCodeEmbeddingScalarWhereInput[]
+  }
+
+  export type QnaUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput> | QnaCreateWithoutProjectInput[] | QnaUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: QnaCreateOrConnectWithoutProjectInput | QnaCreateOrConnectWithoutProjectInput[]
+    upsert?: QnaUpsertWithWhereUniqueWithoutProjectInput | QnaUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: QnaCreateManyProjectInputEnvelope
+    set?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    disconnect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    delete?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+    update?: QnaUpdateWithWhereUniqueWithoutProjectInput | QnaUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: QnaUpdateManyWithWhereWithoutProjectInput | QnaUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
   }
 
   export type ProjectCreateNestedOneWithoutUserToProjectsInput = {
@@ -8280,6 +9927,34 @@ export namespace Prisma {
     upsert?: ProjectUpsertWithoutSourceCodeEmbeddingsInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSourceCodeEmbeddingsInput, ProjectUpdateWithoutSourceCodeEmbeddingsInput>, ProjectUncheckedUpdateWithoutSourceCodeEmbeddingsInput>
+  }
+
+  export type ProjectCreateNestedOneWithoutSavedQuestionsInput = {
+    create?: XOR<ProjectCreateWithoutSavedQuestionsInput, ProjectUncheckedCreateWithoutSavedQuestionsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSavedQuestionsInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutQuestionsAskedInput = {
+    create?: XOR<UserCreateWithoutQuestionsAskedInput, UserUncheckedCreateWithoutQuestionsAskedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutQuestionsAskedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ProjectUpdateOneRequiredWithoutSavedQuestionsNestedInput = {
+    create?: XOR<ProjectCreateWithoutSavedQuestionsInput, ProjectUncheckedCreateWithoutSavedQuestionsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutSavedQuestionsInput
+    upsert?: ProjectUpsertWithoutSavedQuestionsInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutSavedQuestionsInput, ProjectUpdateWithoutSavedQuestionsInput>, ProjectUncheckedUpdateWithoutSavedQuestionsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutQuestionsAskedNestedInput = {
+    create?: XOR<UserCreateWithoutQuestionsAskedInput, UserUncheckedCreateWithoutQuestionsAskedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutQuestionsAskedInput
+    upsert?: UserUpsertWithoutQuestionsAskedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutQuestionsAskedInput, UserUpdateWithoutQuestionsAskedInput>, UserUncheckedUpdateWithoutQuestionsAskedInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8442,6 +10117,29 @@ export namespace Prisma {
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserToProjectCreateWithoutUserInput = {
     id?: string
@@ -8464,6 +10162,36 @@ export namespace Prisma {
 
   export type UserToProjectCreateManyUserInputEnvelope = {
     data: UserToProjectCreateManyUserInput | UserToProjectCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QnaCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    project: ProjectCreateNestedOneWithoutSavedQuestionsInput
+  }
+
+  export type QnaUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId: string
+  }
+
+  export type QnaCreateOrConnectWithoutUserInput = {
+    where: QnaWhereUniqueInput
+    create: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput>
+  }
+
+  export type QnaCreateManyUserInputEnvelope = {
+    data: QnaCreateManyUserInput | QnaCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -8492,6 +10220,36 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"UserToProject"> | Date | string
     userId?: StringFilter<"UserToProject"> | string
     projectId?: StringFilter<"UserToProject"> | string
+  }
+
+  export type QnaUpsertWithWhereUniqueWithoutUserInput = {
+    where: QnaWhereUniqueInput
+    update: XOR<QnaUpdateWithoutUserInput, QnaUncheckedUpdateWithoutUserInput>
+    create: XOR<QnaCreateWithoutUserInput, QnaUncheckedCreateWithoutUserInput>
+  }
+
+  export type QnaUpdateWithWhereUniqueWithoutUserInput = {
+    where: QnaWhereUniqueInput
+    data: XOR<QnaUpdateWithoutUserInput, QnaUncheckedUpdateWithoutUserInput>
+  }
+
+  export type QnaUpdateManyWithWhereWithoutUserInput = {
+    where: QnaScalarWhereInput
+    data: XOR<QnaUpdateManyMutationInput, QnaUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type QnaScalarWhereInput = {
+    AND?: QnaScalarWhereInput | QnaScalarWhereInput[]
+    OR?: QnaScalarWhereInput[]
+    NOT?: QnaScalarWhereInput | QnaScalarWhereInput[]
+    id?: StringFilter<"Qna"> | string
+    createdAt?: DateTimeFilter<"Qna"> | Date | string
+    updatedAt?: DateTimeFilter<"Qna"> | Date | string
+    question?: StringFilter<"Qna"> | string
+    answer?: StringFilter<"Qna"> | string
+    fileReferences?: JsonNullableFilter<"Qna">
+    projectId?: StringFilter<"Qna"> | string
+    userId?: StringFilter<"Qna"> | string
   }
 
   export type UserToProjectCreateWithoutProjectInput = {
@@ -8576,6 +10334,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type QnaCreateWithoutProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutQuestionsAskedInput
+  }
+
+  export type QnaUncheckedCreateWithoutProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    userId: string
+  }
+
+  export type QnaCreateOrConnectWithoutProjectInput = {
+    where: QnaWhereUniqueInput
+    create: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput>
+  }
+
+  export type QnaCreateManyProjectInputEnvelope = {
+    data: QnaCreateManyProjectInput | QnaCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserToProjectUpsertWithWhereUniqueWithoutProjectInput = {
     where: UserToProjectWhereUniqueInput
     update: XOR<UserToProjectUpdateWithoutProjectInput, UserToProjectUncheckedUpdateWithoutProjectInput>
@@ -8651,6 +10439,22 @@ export namespace Prisma {
     projectId?: StringFilter<"SourceCodeEmbedding"> | string
   }
 
+  export type QnaUpsertWithWhereUniqueWithoutProjectInput = {
+    where: QnaWhereUniqueInput
+    update: XOR<QnaUpdateWithoutProjectInput, QnaUncheckedUpdateWithoutProjectInput>
+    create: XOR<QnaCreateWithoutProjectInput, QnaUncheckedCreateWithoutProjectInput>
+  }
+
+  export type QnaUpdateWithWhereUniqueWithoutProjectInput = {
+    where: QnaWhereUniqueInput
+    data: XOR<QnaUpdateWithoutProjectInput, QnaUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type QnaUpdateManyWithWhereWithoutProjectInput = {
+    where: QnaScalarWhereInput
+    data: XOR<QnaUpdateManyMutationInput, QnaUncheckedUpdateManyWithoutProjectInput>
+  }
+
   export type ProjectCreateWithoutUserToProjectsInput = {
     id?: string
     createdAt?: Date | string
@@ -8660,6 +10464,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     commits?: CommitCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutUserToProjectsInput = {
@@ -8671,6 +10476,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutUserToProjectsInput = {
@@ -8687,6 +10493,7 @@ export namespace Prisma {
     lastName?: string | null
     email: string
     credits?: number
+    questionsAsked?: QnaCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserToProjectsInput = {
@@ -8698,6 +10505,7 @@ export namespace Prisma {
     lastName?: string | null
     email: string
     credits?: number
+    questionsAsked?: QnaUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserToProjectsInput = {
@@ -8725,6 +10533,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     commits?: CommitUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutUserToProjectsInput = {
@@ -8736,6 +10545,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type UserUpsertWithoutUserToProjectsInput = {
@@ -8758,6 +10568,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
+    questionsAsked?: QnaUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserToProjectsInput = {
@@ -8769,6 +10580,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
+    questionsAsked?: QnaUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectCreateWithoutCommitsInput = {
@@ -8780,6 +10592,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutCommitsInput = {
@@ -8791,6 +10604,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutCommitsInput = {
@@ -8818,6 +10632,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutCommitsInput = {
@@ -8829,6 +10644,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateWithoutSourceCodeEmbeddingsInput = {
@@ -8840,6 +10656,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutSourceCodeEmbeddingsInput = {
@@ -8851,6 +10668,7 @@ export namespace Prisma {
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
+    savedQuestions?: QnaUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutSourceCodeEmbeddingsInput = {
@@ -8878,6 +10696,7 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutSourceCodeEmbeddingsInput = {
@@ -8889,12 +10708,151 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QnaUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectCreateWithoutSavedQuestionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    url: string
+    deletedAt?: Date | string | null
+    userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
+    commits?: CommitCreateNestedManyWithoutProjectInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutSavedQuestionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    url: string
+    deletedAt?: Date | string | null
+    userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
+    commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutSavedQuestionsInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutSavedQuestionsInput, ProjectUncheckedCreateWithoutSavedQuestionsInput>
+  }
+
+  export type UserCreateWithoutQuestionsAskedInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    imageUrl?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    email: string
+    credits?: number
+    userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutQuestionsAskedInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    imageUrl?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    email: string
+    credits?: number
+    userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutQuestionsAskedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutQuestionsAskedInput, UserUncheckedCreateWithoutQuestionsAskedInput>
+  }
+
+  export type ProjectUpsertWithoutSavedQuestionsInput = {
+    update: XOR<ProjectUpdateWithoutSavedQuestionsInput, ProjectUncheckedUpdateWithoutSavedQuestionsInput>
+    create: XOR<ProjectCreateWithoutSavedQuestionsInput, ProjectUncheckedCreateWithoutSavedQuestionsInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutSavedQuestionsInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutSavedQuestionsInput, ProjectUncheckedUpdateWithoutSavedQuestionsInput>
+  }
+
+  export type ProjectUpdateWithoutSavedQuestionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
+    commits?: CommitUpdateManyWithoutProjectNestedInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutSavedQuestionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
+    commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type UserUpsertWithoutQuestionsAskedInput = {
+    update: XOR<UserUpdateWithoutQuestionsAskedInput, UserUncheckedUpdateWithoutQuestionsAskedInput>
+    create: XOR<UserCreateWithoutQuestionsAskedInput, UserUncheckedCreateWithoutQuestionsAskedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutQuestionsAskedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutQuestionsAskedInput, UserUncheckedUpdateWithoutQuestionsAskedInput>
+  }
+
+  export type UserUpdateWithoutQuestionsAskedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    credits?: IntFieldUpdateOperationsInput | number
+    userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutQuestionsAskedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    credits?: IntFieldUpdateOperationsInput | number
+    userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserToProjectCreateManyUserInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    projectId: string
+  }
+
+  export type QnaCreateManyUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
     projectId: string
   }
 
@@ -8916,6 +10874,36 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    projectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QnaUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    project?: ProjectUpdateOneRequiredWithoutSavedQuestionsNestedInput
+  }
+
+  export type QnaUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    projectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QnaUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
     projectId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -8943,6 +10931,16 @@ export namespace Prisma {
     sourceCode: string
     fileName: string
     summary: string
+  }
+
+  export type QnaCreateManyProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: string
+    answer: string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    userId: string
   }
 
   export type UserToProjectUpdateWithoutProjectInput = {
@@ -9021,6 +11019,36 @@ export namespace Prisma {
     sourceCode?: StringFieldUpdateOperationsInput | string
     fileName?: StringFieldUpdateOperationsInput | string
     summary?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QnaUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutQuestionsAskedNestedInput
+  }
+
+  export type QnaUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QnaUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    fileReferences?: NullableJsonNullValueInput | InputJsonValue
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -170,9 +170,25 @@ exports.Prisma.SourceCodeEmbeddingScalarFieldEnum = {
   projectId: 'projectId'
 };
 
+exports.Prisma.QnaScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  question: 'question',
+  answer: 'answer',
+  fileReferences: 'fileReferences',
+  projectId: 'projectId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -185,13 +201,20 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
   Project: 'Project',
   UserToProject: 'UserToProject',
   Commit: 'Commit',
-  SourceCodeEmbedding: 'SourceCodeEmbedding'
+  SourceCodeEmbedding: 'SourceCodeEmbedding',
+  Qna: 'Qna'
 };
 
 /**
