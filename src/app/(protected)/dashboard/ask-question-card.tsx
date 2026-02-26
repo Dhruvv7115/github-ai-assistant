@@ -21,6 +21,7 @@ import { api } from "@/trpc/react";
 import { CodeReferences } from "./code-references";
 import { Download, Github } from "lucide-react";
 import { toast } from "sonner";
+import { useRefetch } from "@/hooks/use-refetch";
 
 const AskQuestionCard = () => {
   const { projectId } = useProjects();
@@ -36,6 +37,8 @@ const AskQuestionCard = () => {
     }[]
   >([]);
   const [streaming, setStreaming] = React.useState(false);
+  const refetch = useRefetch();
+
   api.project.askQuestion.useSubscription(
     {
       question,
@@ -107,6 +110,7 @@ const AskQuestionCard = () => {
                   {
                     onSuccess: () => {
                       toast.success("Answer saved successfully");
+                      refetch();
                     },
                     onError: () => {
                       toast.error("Something went wrong");
