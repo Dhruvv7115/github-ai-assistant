@@ -2,13 +2,13 @@ import { GoogleGenAI } from "@google/genai";
 import type { Document } from "@langchain/core/documents";
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-const genAI = new GoogleGenAI({
+export const genAI = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
 export const getAiSummary = async (diff: string): Promise<string> => {
   const response = await genAI.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-lite",
 
     contents: [
       `You are an expert programmer, and you are trying to summarize a git diff.
@@ -61,7 +61,7 @@ export const summarizeCode = async (doc: Document) => {
     const sourceCode = doc.pageContent;
     const slicedCode = sourceCode.slice(0, 5000);
     const response = await genAI.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.5-flash-lite",
       contents: [
         `you are an intelligent senior software engineer who specializes in onboarding junior software engineers onto projects, you are onboarding a junior software engineer and explaining to them the purpose of ${doc.metadata.source} file. 
         Here is the code:
@@ -86,13 +86,3 @@ export const getEmbedding = async (summary: string) => {
   });
   return response.embeddings?.[0]?.values ?? [];
 };
-
-// const response = await genAI.models.generateContentStream({
-//   model: "gemini-2.5-flash",
-//   contents: "Write a story about a magic backpack.",
-// });
-// let text = "";
-// for await (const chunk of response) {
-//   console.log(chunk.text);
-//   text += chunk.text;
-// }
