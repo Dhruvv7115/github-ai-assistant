@@ -3,7 +3,6 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { pollCommits } from "@/lib/github";
 import { indexGithubRepo } from "@/lib/github-loader";
 import { genAI, getEmbedding } from "@/lib/gemini";
-import { db } from "@/server/db";
 
 export const projectRouter = createTRPCRouter({
   create: protectedProcedure
@@ -63,13 +62,13 @@ export const projectRouter = createTRPCRouter({
         projectId: z.string(),
       }),
     )
-    .subscription(async function* ({ input }) {
+    .subscription(async function* ({ ctx, input }) {
       const { question, projectId } = input;
 
       const embedding = await getEmbedding(question);
       const vectorQuery = `[${embedding.join(",")}]`;
 
-      const result = (await db.$queryRaw`
+      const result = (await ctx.db.$queryRaw`
         SELECT "fileName", "sourceCode", "summary",
         1 - ("summaryEmbedding" <-> ${vectorQuery}::vector) AS "similarity"
         FROM "SourceCodeEmbedding"
@@ -160,7 +159,7 @@ export const projectRouter = createTRPCRouter({
   getQnas: protectedProcedure
     .input(z.object({ projectId: z.string() }))
     .query(async ({ ctx, input }) => {
-      return await db.qna.findMany({
+      return await ctx.db.qna.findMany({
         where: {
           projectId: input.projectId,
         },
@@ -169,6 +168,79 @@ export const projectRouter = createTRPCRouter({
         },
         orderBy: {
           createdAt: "desc",
+        },
+      });
+    }),
+  uploadMeeting: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+        meetingUrl: z.string(),
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const meeting = await ctx.db.meeting.create({
+        data: {
+          projectId: input.projectId,
+          meetingUrl: input.meetingUrl,
+          name: input.name,
+        },
+      });
+      return meeting;
+    }),
+  getMeetings: protectedProcedure
+    .input(z.object({ projectId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.meeting.findMany({
+        where: {
+          projectId: input.projectId,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
+          issues: true,
+        },
+      });
+    }),
+  deleteMeeting: protectedProcedure
+    .input(
+      z.object({
+        meetingId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.meeting.delete({
+        where: {
+          id: input.meetingId,
+        },
+      });
+      return true;
+    }),
+
+  getMeetingById: protectedProcedure
+    .input(z.object({ meetingId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.meeting.findUnique({
+        where: {
+          id: input.meetingId,
+        },
+        include: {
+          issues: true,
+        },
+      });
+    }),
+
+  archiveProject: protectedProcedure
+    .input(z.object({ projectId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.project.update({
+        where: {
+          id: input.projectId,
+        },
+        data: {
+          deletedAt: new Date(),
         },
       });
     }),
