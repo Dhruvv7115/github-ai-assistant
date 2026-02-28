@@ -9,7 +9,7 @@ const supabase = createClient(
 );
 
 // Upload file using standard upload
-async function uploadFile(file: File, userId: string) {
+export async function uploadFileToSupabase(file: File, userId: string) {
   const filePath = `${BUCKET_NAME}/${userId}/${file.name}`;
   const { data, error } = await supabase.storage
     .from("meetings")
