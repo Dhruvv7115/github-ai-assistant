@@ -181,6 +181,28 @@ exports.Prisma.QnaScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.MeetingScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  status: 'status',
+  meetingUrl: 'meetingUrl',
+  name: 'name',
+  projectId: 'projectId'
+};
+
+exports.Prisma.IssueScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  start: 'start',
+  end: 'end',
+  gist: 'gist',
+  headline: 'headline',
+  summary: 'summary',
+  meetingId: 'meetingId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -206,7 +228,10 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-
+exports.MeetingStatus = exports.$Enums.MeetingStatus = {
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -214,7 +239,9 @@ exports.Prisma.ModelName = {
   UserToProject: 'UserToProject',
   Commit: 'Commit',
   SourceCodeEmbedding: 'SourceCodeEmbedding',
-  Qna: 'Qna'
+  Qna: 'Qna',
+  Meeting: 'Meeting',
+  Issue: 'Issue'
 };
 
 /**
