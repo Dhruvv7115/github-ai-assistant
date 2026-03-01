@@ -203,6 +203,14 @@ exports.Prisma.IssueScalarFieldEnum = {
   meetingId: 'meetingId'
 };
 
+exports.Prisma.StripeTransactionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  creditsPurchased: 'creditsPurchased',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -241,7 +249,8 @@ exports.Prisma.ModelName = {
   SourceCodeEmbedding: 'SourceCodeEmbedding',
   Qna: 'Qna',
   Meeting: 'Meeting',
-  Issue: 'Issue'
+  Issue: 'Issue',
+  StripeTransaction: 'StripeTransaction'
 };
 
 /**

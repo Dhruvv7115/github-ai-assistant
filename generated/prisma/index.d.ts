@@ -53,6 +53,11 @@ export type Meeting = $Result.DefaultSelection<Prisma.$MeetingPayload>
  * 
  */
 export type Issue = $Result.DefaultSelection<Prisma.$IssuePayload>
+/**
+ * Model StripeTransaction
+ * 
+ */
+export type StripeTransaction = $Result.DefaultSelection<Prisma.$StripeTransactionPayload>
 
 /**
  * Enums
@@ -268,6 +273,16 @@ export class PrismaClient<
     * ```
     */
   get issue(): Prisma.IssueDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.stripeTransaction`: Exposes CRUD operations for the **StripeTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StripeTransactions
+    * const stripeTransactions = await prisma.stripeTransaction.findMany()
+    * ```
+    */
+  get stripeTransaction(): Prisma.StripeTransactionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -716,7 +731,8 @@ export namespace Prisma {
     SourceCodeEmbedding: 'SourceCodeEmbedding',
     Qna: 'Qna',
     Meeting: 'Meeting',
-    Issue: 'Issue'
+    Issue: 'Issue',
+    StripeTransaction: 'StripeTransaction'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -735,7 +751,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "project" | "userToProject" | "commit" | "sourceCodeEmbedding" | "qna" | "meeting" | "issue"
+      modelProps: "user" | "project" | "userToProject" | "commit" | "sourceCodeEmbedding" | "qna" | "meeting" | "issue" | "stripeTransaction"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1331,6 +1347,80 @@ export namespace Prisma {
           }
         }
       }
+      StripeTransaction: {
+        payload: Prisma.$StripeTransactionPayload<ExtArgs>
+        fields: Prisma.StripeTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StripeTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StripeTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.StripeTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StripeTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.StripeTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.StripeTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.StripeTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StripeTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.StripeTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          update: {
+            args: Prisma.StripeTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.StripeTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StripeTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StripeTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.StripeTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StripeTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.StripeTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStripeTransaction>
+          }
+          groupBy: {
+            args: Prisma.StripeTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StripeTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StripeTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<StripeTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1435,6 +1525,7 @@ export namespace Prisma {
     qna?: QnaOmit
     meeting?: MeetingOmit
     issue?: IssueOmit
+    stripeTransaction?: StripeTransactionOmit
   }
 
   /* Types for Logging */
@@ -1517,11 +1608,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     userToProjects: number
     questionsAsked: number
+    stripeTransactions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | UserCountOutputTypeCountUserToProjectsArgs
     questionsAsked?: boolean | UserCountOutputTypeCountQuestionsAskedArgs
+    stripeTransactions?: boolean | UserCountOutputTypeCountStripeTransactionsArgs
   }
 
   // Custom InputTypes
@@ -1547,6 +1640,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountQuestionsAskedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QnaWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStripeTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StripeTransactionWhereInput
   }
 
 
@@ -1876,6 +1976,7 @@ export namespace Prisma {
     credits?: boolean
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
     questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
+    stripeTransactions?: boolean | User$stripeTransactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1916,6 +2017,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
     questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
+    stripeTransactions?: boolean | User$stripeTransactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1926,6 +2028,7 @@ export namespace Prisma {
     objects: {
       userToProjects: Prisma.$UserToProjectPayload<ExtArgs>[]
       questionsAsked: Prisma.$QnaPayload<ExtArgs>[]
+      stripeTransactions: Prisma.$StripeTransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2332,6 +2435,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     userToProjects<T extends User$userToProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$userToProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserToProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     questionsAsked<T extends User$questionsAskedArgs<ExtArgs> = {}>(args?: Subset<T, User$questionsAskedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QnaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stripeTransactions<T extends User$stripeTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$stripeTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2802,6 +2906,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QnaScalarFieldEnum | QnaScalarFieldEnum[]
+  }
+
+  /**
+   * User.stripeTransactions
+   */
+  export type User$stripeTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    where?: StripeTransactionWhereInput
+    orderBy?: StripeTransactionOrderByWithRelationInput | StripeTransactionOrderByWithRelationInput[]
+    cursor?: StripeTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StripeTransactionScalarFieldEnum | StripeTransactionScalarFieldEnum[]
   }
 
   /**
@@ -10591,6 +10719,1098 @@ export namespace Prisma {
 
 
   /**
+   * Model StripeTransaction
+   */
+
+  export type AggregateStripeTransaction = {
+    _count: StripeTransactionCountAggregateOutputType | null
+    _avg: StripeTransactionAvgAggregateOutputType | null
+    _sum: StripeTransactionSumAggregateOutputType | null
+    _min: StripeTransactionMinAggregateOutputType | null
+    _max: StripeTransactionMaxAggregateOutputType | null
+  }
+
+  export type StripeTransactionAvgAggregateOutputType = {
+    creditsPurchased: number | null
+  }
+
+  export type StripeTransactionSumAggregateOutputType = {
+    creditsPurchased: number | null
+  }
+
+  export type StripeTransactionMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    creditsPurchased: number | null
+    userId: string | null
+  }
+
+  export type StripeTransactionMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    creditsPurchased: number | null
+    userId: string | null
+  }
+
+  export type StripeTransactionCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    creditsPurchased: number
+    userId: number
+    _all: number
+  }
+
+
+  export type StripeTransactionAvgAggregateInputType = {
+    creditsPurchased?: true
+  }
+
+  export type StripeTransactionSumAggregateInputType = {
+    creditsPurchased?: true
+  }
+
+  export type StripeTransactionMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    creditsPurchased?: true
+    userId?: true
+  }
+
+  export type StripeTransactionMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    creditsPurchased?: true
+    userId?: true
+  }
+
+  export type StripeTransactionCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    creditsPurchased?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type StripeTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StripeTransaction to aggregate.
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StripeTransactions to fetch.
+     */
+    orderBy?: StripeTransactionOrderByWithRelationInput | StripeTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StripeTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StripeTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StripeTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StripeTransactions
+    **/
+    _count?: true | StripeTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StripeTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StripeTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StripeTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StripeTransactionMaxAggregateInputType
+  }
+
+  export type GetStripeTransactionAggregateType<T extends StripeTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateStripeTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStripeTransaction[P]>
+      : GetScalarType<T[P], AggregateStripeTransaction[P]>
+  }
+
+
+
+
+  export type StripeTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StripeTransactionWhereInput
+    orderBy?: StripeTransactionOrderByWithAggregationInput | StripeTransactionOrderByWithAggregationInput[]
+    by: StripeTransactionScalarFieldEnum[] | StripeTransactionScalarFieldEnum
+    having?: StripeTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StripeTransactionCountAggregateInputType | true
+    _avg?: StripeTransactionAvgAggregateInputType
+    _sum?: StripeTransactionSumAggregateInputType
+    _min?: StripeTransactionMinAggregateInputType
+    _max?: StripeTransactionMaxAggregateInputType
+  }
+
+  export type StripeTransactionGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    creditsPurchased: number
+    userId: string
+    _count: StripeTransactionCountAggregateOutputType | null
+    _avg: StripeTransactionAvgAggregateOutputType | null
+    _sum: StripeTransactionSumAggregateOutputType | null
+    _min: StripeTransactionMinAggregateOutputType | null
+    _max: StripeTransactionMaxAggregateOutputType | null
+  }
+
+  type GetStripeTransactionGroupByPayload<T extends StripeTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StripeTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StripeTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StripeTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], StripeTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StripeTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    creditsPurchased?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stripeTransaction"]>
+
+  export type StripeTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    creditsPurchased?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stripeTransaction"]>
+
+  export type StripeTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    creditsPurchased?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stripeTransaction"]>
+
+  export type StripeTransactionSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    creditsPurchased?: boolean
+    userId?: boolean
+  }
+
+  export type StripeTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "creditsPurchased" | "userId", ExtArgs["result"]["stripeTransaction"]>
+  export type StripeTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StripeTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type StripeTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $StripeTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StripeTransaction"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      creditsPurchased: number
+      userId: string
+    }, ExtArgs["result"]["stripeTransaction"]>
+    composites: {}
+  }
+
+  type StripeTransactionGetPayload<S extends boolean | null | undefined | StripeTransactionDefaultArgs> = $Result.GetResult<Prisma.$StripeTransactionPayload, S>
+
+  type StripeTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StripeTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StripeTransactionCountAggregateInputType | true
+    }
+
+  export interface StripeTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StripeTransaction'], meta: { name: 'StripeTransaction' } }
+    /**
+     * Find zero or one StripeTransaction that matches the filter.
+     * @param {StripeTransactionFindUniqueArgs} args - Arguments to find a StripeTransaction
+     * @example
+     * // Get one StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StripeTransactionFindUniqueArgs>(args: SelectSubset<T, StripeTransactionFindUniqueArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StripeTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StripeTransactionFindUniqueOrThrowArgs} args - Arguments to find a StripeTransaction
+     * @example
+     * // Get one StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StripeTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, StripeTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StripeTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionFindFirstArgs} args - Arguments to find a StripeTransaction
+     * @example
+     * // Get one StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StripeTransactionFindFirstArgs>(args?: SelectSubset<T, StripeTransactionFindFirstArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StripeTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionFindFirstOrThrowArgs} args - Arguments to find a StripeTransaction
+     * @example
+     * // Get one StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StripeTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, StripeTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StripeTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StripeTransactions
+     * const stripeTransactions = await prisma.stripeTransaction.findMany()
+     * 
+     * // Get first 10 StripeTransactions
+     * const stripeTransactions = await prisma.stripeTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const stripeTransactionWithIdOnly = await prisma.stripeTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StripeTransactionFindManyArgs>(args?: SelectSubset<T, StripeTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StripeTransaction.
+     * @param {StripeTransactionCreateArgs} args - Arguments to create a StripeTransaction.
+     * @example
+     * // Create one StripeTransaction
+     * const StripeTransaction = await prisma.stripeTransaction.create({
+     *   data: {
+     *     // ... data to create a StripeTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends StripeTransactionCreateArgs>(args: SelectSubset<T, StripeTransactionCreateArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StripeTransactions.
+     * @param {StripeTransactionCreateManyArgs} args - Arguments to create many StripeTransactions.
+     * @example
+     * // Create many StripeTransactions
+     * const stripeTransaction = await prisma.stripeTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StripeTransactionCreateManyArgs>(args?: SelectSubset<T, StripeTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StripeTransactions and returns the data saved in the database.
+     * @param {StripeTransactionCreateManyAndReturnArgs} args - Arguments to create many StripeTransactions.
+     * @example
+     * // Create many StripeTransactions
+     * const stripeTransaction = await prisma.stripeTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StripeTransactions and only return the `id`
+     * const stripeTransactionWithIdOnly = await prisma.stripeTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StripeTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, StripeTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StripeTransaction.
+     * @param {StripeTransactionDeleteArgs} args - Arguments to delete one StripeTransaction.
+     * @example
+     * // Delete one StripeTransaction
+     * const StripeTransaction = await prisma.stripeTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one StripeTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StripeTransactionDeleteArgs>(args: SelectSubset<T, StripeTransactionDeleteArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StripeTransaction.
+     * @param {StripeTransactionUpdateArgs} args - Arguments to update one StripeTransaction.
+     * @example
+     * // Update one StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StripeTransactionUpdateArgs>(args: SelectSubset<T, StripeTransactionUpdateArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StripeTransactions.
+     * @param {StripeTransactionDeleteManyArgs} args - Arguments to filter StripeTransactions to delete.
+     * @example
+     * // Delete a few StripeTransactions
+     * const { count } = await prisma.stripeTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StripeTransactionDeleteManyArgs>(args?: SelectSubset<T, StripeTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StripeTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StripeTransactions
+     * const stripeTransaction = await prisma.stripeTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StripeTransactionUpdateManyArgs>(args: SelectSubset<T, StripeTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StripeTransactions and returns the data updated in the database.
+     * @param {StripeTransactionUpdateManyAndReturnArgs} args - Arguments to update many StripeTransactions.
+     * @example
+     * // Update many StripeTransactions
+     * const stripeTransaction = await prisma.stripeTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StripeTransactions and only return the `id`
+     * const stripeTransactionWithIdOnly = await prisma.stripeTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StripeTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, StripeTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StripeTransaction.
+     * @param {StripeTransactionUpsertArgs} args - Arguments to update or create a StripeTransaction.
+     * @example
+     * // Update or create a StripeTransaction
+     * const stripeTransaction = await prisma.stripeTransaction.upsert({
+     *   create: {
+     *     // ... data to create a StripeTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StripeTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StripeTransactionUpsertArgs>(args: SelectSubset<T, StripeTransactionUpsertArgs<ExtArgs>>): Prisma__StripeTransactionClient<$Result.GetResult<Prisma.$StripeTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StripeTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionCountArgs} args - Arguments to filter StripeTransactions to count.
+     * @example
+     * // Count the number of StripeTransactions
+     * const count = await prisma.stripeTransaction.count({
+     *   where: {
+     *     // ... the filter for the StripeTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends StripeTransactionCountArgs>(
+      args?: Subset<T, StripeTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StripeTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StripeTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StripeTransactionAggregateArgs>(args: Subset<T, StripeTransactionAggregateArgs>): Prisma.PrismaPromise<GetStripeTransactionAggregateType<T>>
+
+    /**
+     * Group by StripeTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StripeTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StripeTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StripeTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: StripeTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StripeTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStripeTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StripeTransaction model
+   */
+  readonly fields: StripeTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StripeTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StripeTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StripeTransaction model
+   */
+  interface StripeTransactionFieldRefs {
+    readonly id: FieldRef<"StripeTransaction", 'String'>
+    readonly createdAt: FieldRef<"StripeTransaction", 'DateTime'>
+    readonly updatedAt: FieldRef<"StripeTransaction", 'DateTime'>
+    readonly creditsPurchased: FieldRef<"StripeTransaction", 'Int'>
+    readonly userId: FieldRef<"StripeTransaction", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StripeTransaction findUnique
+   */
+  export type StripeTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which StripeTransaction to fetch.
+     */
+    where: StripeTransactionWhereUniqueInput
+  }
+
+  /**
+   * StripeTransaction findUniqueOrThrow
+   */
+  export type StripeTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which StripeTransaction to fetch.
+     */
+    where: StripeTransactionWhereUniqueInput
+  }
+
+  /**
+   * StripeTransaction findFirst
+   */
+  export type StripeTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which StripeTransaction to fetch.
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StripeTransactions to fetch.
+     */
+    orderBy?: StripeTransactionOrderByWithRelationInput | StripeTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StripeTransactions.
+     */
+    cursor?: StripeTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StripeTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StripeTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StripeTransactions.
+     */
+    distinct?: StripeTransactionScalarFieldEnum | StripeTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * StripeTransaction findFirstOrThrow
+   */
+  export type StripeTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which StripeTransaction to fetch.
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StripeTransactions to fetch.
+     */
+    orderBy?: StripeTransactionOrderByWithRelationInput | StripeTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StripeTransactions.
+     */
+    cursor?: StripeTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StripeTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StripeTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StripeTransactions.
+     */
+    distinct?: StripeTransactionScalarFieldEnum | StripeTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * StripeTransaction findMany
+   */
+  export type StripeTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which StripeTransactions to fetch.
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StripeTransactions to fetch.
+     */
+    orderBy?: StripeTransactionOrderByWithRelationInput | StripeTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StripeTransactions.
+     */
+    cursor?: StripeTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StripeTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StripeTransactions.
+     */
+    skip?: number
+    distinct?: StripeTransactionScalarFieldEnum | StripeTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * StripeTransaction create
+   */
+  export type StripeTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StripeTransaction.
+     */
+    data: XOR<StripeTransactionCreateInput, StripeTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * StripeTransaction createMany
+   */
+  export type StripeTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StripeTransactions.
+     */
+    data: StripeTransactionCreateManyInput | StripeTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StripeTransaction createManyAndReturn
+   */
+  export type StripeTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many StripeTransactions.
+     */
+    data: StripeTransactionCreateManyInput | StripeTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StripeTransaction update
+   */
+  export type StripeTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StripeTransaction.
+     */
+    data: XOR<StripeTransactionUpdateInput, StripeTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which StripeTransaction to update.
+     */
+    where: StripeTransactionWhereUniqueInput
+  }
+
+  /**
+   * StripeTransaction updateMany
+   */
+  export type StripeTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StripeTransactions.
+     */
+    data: XOR<StripeTransactionUpdateManyMutationInput, StripeTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which StripeTransactions to update
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * Limit how many StripeTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StripeTransaction updateManyAndReturn
+   */
+  export type StripeTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update StripeTransactions.
+     */
+    data: XOR<StripeTransactionUpdateManyMutationInput, StripeTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which StripeTransactions to update
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * Limit how many StripeTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StripeTransaction upsert
+   */
+  export type StripeTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StripeTransaction to update in case it exists.
+     */
+    where: StripeTransactionWhereUniqueInput
+    /**
+     * In case the StripeTransaction found by the `where` argument doesn't exist, create a new StripeTransaction with this data.
+     */
+    create: XOR<StripeTransactionCreateInput, StripeTransactionUncheckedCreateInput>
+    /**
+     * In case the StripeTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StripeTransactionUpdateInput, StripeTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * StripeTransaction delete
+   */
+  export type StripeTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which StripeTransaction to delete.
+     */
+    where: StripeTransactionWhereUniqueInput
+  }
+
+  /**
+   * StripeTransaction deleteMany
+   */
+  export type StripeTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StripeTransactions to delete
+     */
+    where?: StripeTransactionWhereInput
+    /**
+     * Limit how many StripeTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StripeTransaction without action
+   */
+  export type StripeTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StripeTransaction
+     */
+    select?: StripeTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StripeTransaction
+     */
+    omit?: StripeTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StripeTransactionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -10708,6 +11928,17 @@ export namespace Prisma {
   };
 
   export type IssueScalarFieldEnum = (typeof IssueScalarFieldEnum)[keyof typeof IssueScalarFieldEnum]
+
+
+  export const StripeTransactionScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    creditsPurchased: 'creditsPurchased',
+    userId: 'userId'
+  };
+
+  export type StripeTransactionScalarFieldEnum = (typeof StripeTransactionScalarFieldEnum)[keyof typeof StripeTransactionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10857,6 +12088,7 @@ export namespace Prisma {
     credits?: IntFilter<"User"> | number
     userToProjects?: UserToProjectListRelationFilter
     questionsAsked?: QnaListRelationFilter
+    stripeTransactions?: StripeTransactionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10870,6 +12102,7 @@ export namespace Prisma {
     credits?: SortOrder
     userToProjects?: UserToProjectOrderByRelationAggregateInput
     questionsAsked?: QnaOrderByRelationAggregateInput
+    stripeTransactions?: StripeTransactionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10886,6 +12119,7 @@ export namespace Prisma {
     credits?: IntFilter<"User"> | number
     userToProjects?: UserToProjectListRelationFilter
     questionsAsked?: QnaListRelationFilter
+    stripeTransactions?: StripeTransactionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -11400,6 +12634,63 @@ export namespace Prisma {
     meetingId?: StringWithAggregatesFilter<"Issue"> | string
   }
 
+  export type StripeTransactionWhereInput = {
+    AND?: StripeTransactionWhereInput | StripeTransactionWhereInput[]
+    OR?: StripeTransactionWhereInput[]
+    NOT?: StripeTransactionWhereInput | StripeTransactionWhereInput[]
+    id?: StringFilter<"StripeTransaction"> | string
+    createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    userId?: StringFilter<"StripeTransaction"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type StripeTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    creditsPurchased?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type StripeTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: StripeTransactionWhereInput | StripeTransactionWhereInput[]
+    OR?: StripeTransactionWhereInput[]
+    NOT?: StripeTransactionWhereInput | StripeTransactionWhereInput[]
+    createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    userId?: StringFilter<"StripeTransaction"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type StripeTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    creditsPurchased?: SortOrder
+    userId?: SortOrder
+    _count?: StripeTransactionCountOrderByAggregateInput
+    _avg?: StripeTransactionAvgOrderByAggregateInput
+    _max?: StripeTransactionMaxOrderByAggregateInput
+    _min?: StripeTransactionMinOrderByAggregateInput
+    _sum?: StripeTransactionSumOrderByAggregateInput
+  }
+
+  export type StripeTransactionScalarWhereWithAggregatesInput = {
+    AND?: StripeTransactionScalarWhereWithAggregatesInput | StripeTransactionScalarWhereWithAggregatesInput[]
+    OR?: StripeTransactionScalarWhereWithAggregatesInput[]
+    NOT?: StripeTransactionScalarWhereWithAggregatesInput | StripeTransactionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"StripeTransaction"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"StripeTransaction"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"StripeTransaction"> | Date | string
+    creditsPurchased?: IntWithAggregatesFilter<"StripeTransaction"> | number
+    userId?: StringWithAggregatesFilter<"StripeTransaction"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     createdAt?: Date | string
@@ -11411,6 +12702,7 @@ export namespace Prisma {
     credits?: number
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
     questionsAsked?: QnaCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -11424,6 +12716,7 @@ export namespace Prisma {
     credits?: number
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
     questionsAsked?: QnaUncheckedCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -11437,6 +12730,7 @@ export namespace Prisma {
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
     questionsAsked?: QnaUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -11450,6 +12744,7 @@ export namespace Prisma {
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
     questionsAsked?: QnaUncheckedUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11998,6 +13293,61 @@ export namespace Prisma {
     meetingId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type StripeTransactionCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
+    user: UserCreateNestedOneWithoutStripeTransactionsInput
+  }
+
+  export type StripeTransactionUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
+    userId: string
+  }
+
+  export type StripeTransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutStripeTransactionsNestedInput
+  }
+
+  export type StripeTransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type StripeTransactionCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
+    userId: string
+  }
+
+  export type StripeTransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type StripeTransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -12062,6 +13412,12 @@ export namespace Prisma {
     none?: QnaWhereInput
   }
 
+  export type StripeTransactionListRelationFilter = {
+    every?: StripeTransactionWhereInput
+    some?: StripeTransactionWhereInput
+    none?: StripeTransactionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -12072,6 +13428,10 @@ export namespace Prisma {
   }
 
   export type QnaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StripeTransactionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12544,6 +13904,38 @@ export namespace Prisma {
     meetingId?: SortOrder
   }
 
+  export type StripeTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    creditsPurchased?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type StripeTransactionAvgOrderByAggregateInput = {
+    creditsPurchased?: SortOrder
+  }
+
+  export type StripeTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    creditsPurchased?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type StripeTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    creditsPurchased?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type StripeTransactionSumOrderByAggregateInput = {
+    creditsPurchased?: SortOrder
+  }
+
   export type UserToProjectCreateNestedManyWithoutUserInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutUserInput | UserToProjectCreateOrConnectWithoutUserInput[]
@@ -12558,6 +13950,13 @@ export namespace Prisma {
     connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
   }
 
+  export type StripeTransactionCreateNestedManyWithoutUserInput = {
+    create?: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput> | StripeTransactionCreateWithoutUserInput[] | StripeTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StripeTransactionCreateOrConnectWithoutUserInput | StripeTransactionCreateOrConnectWithoutUserInput[]
+    createMany?: StripeTransactionCreateManyUserInputEnvelope
+    connect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+  }
+
   export type UserToProjectUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutUserInput | UserToProjectCreateOrConnectWithoutUserInput[]
@@ -12570,6 +13969,13 @@ export namespace Prisma {
     connectOrCreate?: QnaCreateOrConnectWithoutUserInput | QnaCreateOrConnectWithoutUserInput[]
     createMany?: QnaCreateManyUserInputEnvelope
     connect?: QnaWhereUniqueInput | QnaWhereUniqueInput[]
+  }
+
+  export type StripeTransactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput> | StripeTransactionCreateWithoutUserInput[] | StripeTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StripeTransactionCreateOrConnectWithoutUserInput | StripeTransactionCreateOrConnectWithoutUserInput[]
+    createMany?: StripeTransactionCreateManyUserInputEnvelope
+    connect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12620,6 +14026,20 @@ export namespace Prisma {
     deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
   }
 
+  export type StripeTransactionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput> | StripeTransactionCreateWithoutUserInput[] | StripeTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StripeTransactionCreateOrConnectWithoutUserInput | StripeTransactionCreateOrConnectWithoutUserInput[]
+    upsert?: StripeTransactionUpsertWithWhereUniqueWithoutUserInput | StripeTransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StripeTransactionCreateManyUserInputEnvelope
+    set?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    disconnect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    delete?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    connect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    update?: StripeTransactionUpdateWithWhereUniqueWithoutUserInput | StripeTransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StripeTransactionUpdateManyWithWhereWithoutUserInput | StripeTransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StripeTransactionScalarWhereInput | StripeTransactionScalarWhereInput[]
+  }
+
   export type UserToProjectUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserToProjectCreateWithoutUserInput, UserToProjectUncheckedCreateWithoutUserInput> | UserToProjectCreateWithoutUserInput[] | UserToProjectUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutUserInput | UserToProjectCreateOrConnectWithoutUserInput[]
@@ -12646,6 +14066,20 @@ export namespace Prisma {
     update?: QnaUpdateWithWhereUniqueWithoutUserInput | QnaUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: QnaUpdateManyWithWhereWithoutUserInput | QnaUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: QnaScalarWhereInput | QnaScalarWhereInput[]
+  }
+
+  export type StripeTransactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput> | StripeTransactionCreateWithoutUserInput[] | StripeTransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: StripeTransactionCreateOrConnectWithoutUserInput | StripeTransactionCreateOrConnectWithoutUserInput[]
+    upsert?: StripeTransactionUpsertWithWhereUniqueWithoutUserInput | StripeTransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: StripeTransactionCreateManyUserInputEnvelope
+    set?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    disconnect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    delete?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    connect?: StripeTransactionWhereUniqueInput | StripeTransactionWhereUniqueInput[]
+    update?: StripeTransactionUpdateWithWhereUniqueWithoutUserInput | StripeTransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: StripeTransactionUpdateManyWithWhereWithoutUserInput | StripeTransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: StripeTransactionScalarWhereInput | StripeTransactionScalarWhereInput[]
   }
 
   export type UserToProjectCreateNestedManyWithoutProjectInput = {
@@ -13020,6 +14454,20 @@ export namespace Prisma {
     update?: XOR<XOR<MeetingUpdateToOneWithWhereWithoutIssuesInput, MeetingUpdateWithoutIssuesInput>, MeetingUncheckedUpdateWithoutIssuesInput>
   }
 
+  export type UserCreateNestedOneWithoutStripeTransactionsInput = {
+    create?: XOR<UserCreateWithoutStripeTransactionsInput, UserUncheckedCreateWithoutStripeTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStripeTransactionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutStripeTransactionsNestedInput = {
+    create?: XOR<UserCreateWithoutStripeTransactionsInput, UserUncheckedCreateWithoutStripeTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStripeTransactionsInput
+    upsert?: UserUpsertWithoutStripeTransactionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStripeTransactionsInput, UserUpdateWithoutStripeTransactionsInput>, UserUncheckedUpdateWithoutStripeTransactionsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -13275,6 +14723,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type StripeTransactionCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
+  }
+
+  export type StripeTransactionUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
+  }
+
+  export type StripeTransactionCreateOrConnectWithoutUserInput = {
+    where: StripeTransactionWhereUniqueInput
+    create: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type StripeTransactionCreateManyUserInputEnvelope = {
+    data: StripeTransactionCreateManyUserInput | StripeTransactionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserToProjectUpsertWithWhereUniqueWithoutUserInput = {
     where: UserToProjectWhereUniqueInput
     update: XOR<UserToProjectUpdateWithoutUserInput, UserToProjectUncheckedUpdateWithoutUserInput>
@@ -13330,6 +14802,33 @@ export namespace Prisma {
     fileReferences?: JsonNullableFilter<"Qna">
     projectId?: StringFilter<"Qna"> | string
     userId?: StringFilter<"Qna"> | string
+  }
+
+  export type StripeTransactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: StripeTransactionWhereUniqueInput
+    update: XOR<StripeTransactionUpdateWithoutUserInput, StripeTransactionUncheckedUpdateWithoutUserInput>
+    create: XOR<StripeTransactionCreateWithoutUserInput, StripeTransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type StripeTransactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: StripeTransactionWhereUniqueInput
+    data: XOR<StripeTransactionUpdateWithoutUserInput, StripeTransactionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type StripeTransactionUpdateManyWithWhereWithoutUserInput = {
+    where: StripeTransactionScalarWhereInput
+    data: XOR<StripeTransactionUpdateManyMutationInput, StripeTransactionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type StripeTransactionScalarWhereInput = {
+    AND?: StripeTransactionScalarWhereInput | StripeTransactionScalarWhereInput[]
+    OR?: StripeTransactionScalarWhereInput[]
+    NOT?: StripeTransactionScalarWhereInput | StripeTransactionScalarWhereInput[]
+    id?: StringFilter<"StripeTransaction"> | string
+    createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
+    creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    userId?: StringFilter<"StripeTransaction"> | string
   }
 
   export type UserToProjectCreateWithoutProjectInput = {
@@ -13635,6 +15134,7 @@ export namespace Prisma {
     email: string
     credits?: number
     questionsAsked?: QnaCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserToProjectsInput = {
@@ -13647,6 +15147,7 @@ export namespace Prisma {
     email: string
     credits?: number
     questionsAsked?: QnaUncheckedCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserToProjectsInput = {
@@ -13712,6 +15213,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QnaUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserToProjectsInput = {
@@ -13724,6 +15226,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QnaUncheckedUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectCreateWithoutCommitsInput = {
@@ -13903,6 +15406,7 @@ export namespace Prisma {
     email: string
     credits?: number
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutQuestionsAskedInput = {
@@ -13915,6 +15419,7 @@ export namespace Prisma {
     email: string
     credits?: number
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
+    stripeTransactions?: StripeTransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutQuestionsAskedInput = {
@@ -13980,6 +15485,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutQuestionsAskedInput = {
@@ -13992,6 +15498,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
+    stripeTransactions?: StripeTransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProjectCreateWithoutMeetingsInput = {
@@ -14181,6 +15688,74 @@ export namespace Prisma {
     projectId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserCreateWithoutStripeTransactionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    imageUrl?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    email: string
+    credits?: number
+    userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
+    questionsAsked?: QnaCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStripeTransactionsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    imageUrl?: string | null
+    firstName?: string | null
+    lastName?: string | null
+    email: string
+    credits?: number
+    userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
+    questionsAsked?: QnaUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStripeTransactionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStripeTransactionsInput, UserUncheckedCreateWithoutStripeTransactionsInput>
+  }
+
+  export type UserUpsertWithoutStripeTransactionsInput = {
+    update: XOR<UserUpdateWithoutStripeTransactionsInput, UserUncheckedUpdateWithoutStripeTransactionsInput>
+    create: XOR<UserCreateWithoutStripeTransactionsInput, UserUncheckedCreateWithoutStripeTransactionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStripeTransactionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStripeTransactionsInput, UserUncheckedUpdateWithoutStripeTransactionsInput>
+  }
+
+  export type UserUpdateWithoutStripeTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    credits?: IntFieldUpdateOperationsInput | number
+    userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
+    questionsAsked?: QnaUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStripeTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    credits?: IntFieldUpdateOperationsInput | number
+    userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
+    questionsAsked?: QnaUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserToProjectCreateManyUserInput = {
     id?: string
     createdAt?: Date | string
@@ -14196,6 +15771,13 @@ export namespace Prisma {
     answer: string
     fileReferences?: NullableJsonNullValueInput | InputJsonValue
     projectId: string
+  }
+
+  export type StripeTransactionCreateManyUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    creditsPurchased: number
   }
 
   export type UserToProjectUpdateWithoutUserInput = {
@@ -14247,6 +15829,27 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     fileReferences?: NullableJsonNullValueInput | InputJsonValue
     projectId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type StripeTransactionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type StripeTransactionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type StripeTransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    creditsPurchased?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserToProjectCreateManyProjectInput = {
