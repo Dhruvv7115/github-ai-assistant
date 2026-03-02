@@ -100,7 +100,7 @@ export const projectRouter = createTRPCRouter({
         FROM "SourceCodeEmbedding"
         WHERE "projectId" = ${projectId}
         ORDER BY "similarity" DESC
-        LIMIT 10
+        LIMIT 5
       `) as {
         fileName: string;
         sourceCode: string;

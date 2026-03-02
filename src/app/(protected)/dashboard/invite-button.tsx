@@ -30,11 +30,11 @@ const InviteButton = () => {
             readOnly
             onClick={() => {
               navigator.clipboard.writeText(
-                `${window.location.origin}/join/${projectId}`,
+                `${typeof window !== "undefined" ? window.location.origin : ""}/join/${projectId}`,
               );
               toast.success("Link copied to clipboard");
             }}
-            value={`${window.location.origin || ""}/join/${projectId}`}
+            value={`${typeof window !== "undefined" ? window.location.origin : ""}/join/${projectId}`}
           />
         </DialogContent>
       </Dialog>
