@@ -8,8 +8,9 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 import { useRefetch } from "@/hooks/use-refetch";
+import { useRouter } from "next/navigation";
 
 type FormInputs = {
   projectName: string;
@@ -19,28 +20,40 @@ type FormInputs = {
 const CreateProjectPage = () => {
   const { register, handleSubmit, reset } = useForm<FormInputs>();
   const createProject = api.project.create.useMutation();
+  const checkCredits = api.project.checkCredits.useMutation();
   const refetch = useRefetch();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    createProject.mutate(
-      {
-        name: data.projectName,
-        repoUrl: data.repoUrl,
+    if (!!checkCredits.data) {
+      createProject.mutate(
+        {
+          name: data.projectName,
+          repoUrl: data.repoUrl,
+          githubToken: data.githubToken,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Project created successfully");
+            refetch();
+            reset();
+          },
+          onError: () => {
+            toast.error("Something went wrong");
+          },
+        },
+      );
+    } else {
+      checkCredits.mutate({
+        githubUrl: data.repoUrl,
         githubToken: data.githubToken,
-      },
-      {
-        onSuccess: () => {
-          toast.success("Project created successfully");
-          refetch();
-          reset();
-        },
-        onError: () => {
-          toast.error("Something went wrong");
-        },
-      },
-    );
-    reset();
+      });
+    }
   };
+  const hasEnoughCredits =
+    checkCredits?.data?.fileCount && checkCredits?.data?.userCredits
+      ? checkCredits.data?.fileCount <= checkCredits.data?.userCredits
+      : true;
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       <div className="mx-auto flex w-fit flex-col items-center gap-4 p-6 md:flex-row">
@@ -75,8 +88,42 @@ const CreateProjectPage = () => {
               {...register("githubToken")}
               placeholder="Github Token (Optional)"
             />
-            <Button type="submit" disabled={createProject.isPending}>
-              {createProject.isPending ? (
+            {!!checkCredits.data &&
+              checkCredits.data.fileCount < checkCredits.data.userCredits && (
+                <div className="rounded-md border border-blue-200 bg-blue-50 px-4 py-2 text-blue-700">
+                  <div className="flex items-center gap-2">
+                    <Info className="size-4" />
+                    <p className="text-sm">
+                      You will be charged{" "}
+                      <strong>{checkCredits.data?.fileCount}</strong> credits
+                      for this repository.
+                    </p>
+                  </div>
+                  <p className="text-sm">
+                    You have <strong>{checkCredits.data?.userCredits}</strong>{" "}
+                    credits remaining.
+                  </p>
+                </div>
+              )}
+            <Button
+              type="submit"
+              disabled={
+                createProject.isPending ||
+                checkCredits.isPending ||
+                !hasEnoughCredits
+              }
+            >
+              {!!checkCredits.data ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Checking Credits...
+                </span>
+              ) : checkCredits.isPending ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="animate-spin" />
+                  Checking Credits...
+                </span>
+              ) : createProject.isPending ? (
                 <span className="flex items-center gap-2">
                   <Loader2 className="animate-spin" />
                   Creating...

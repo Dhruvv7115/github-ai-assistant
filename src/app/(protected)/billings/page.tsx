@@ -35,6 +35,7 @@ const BillingPage = () => {
         value={creditsToBuy}
         defaultValue={[100]}
         max={1000}
+        min={50}
         step={10}
         onValueChange={(value) => setCreditsToBuy(value)}
         className="mt-4"
