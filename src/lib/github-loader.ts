@@ -89,6 +89,11 @@ const generateEmbeddings = async (docs: Document[]) => {
   const embeddings = [];
   for (const doc of docs) {
     const summary = await summarizeCode(doc);
+    if (!summary) {
+      console.log(`Skipping ${doc.metadata.source} - empty summary`);
+      continue; // skip files with no summary
+    }
+
     await new Promise((resolve) => {
       console.log(
         `processed ${docs.indexOf(doc)} of ${docs.length} embedding, waiting for 5 seconds`,
