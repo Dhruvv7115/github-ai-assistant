@@ -37,6 +37,7 @@ const CreateProjectPage = () => {
             toast.success("Project created successfully");
             refetch();
             reset();
+            router.push("/dashboard");
           },
           onError: () => {
             toast.error("Something went wrong");
