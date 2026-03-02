@@ -1,7 +1,7 @@
 import z from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { pollCommits } from "@/lib/github";
-import { indexGithubRepo } from "@/lib/github-loader";
+import { getFileCount, indexGithubRepo } from "@/lib/github-loader";
 import { genAI, getEmbedding } from "@/lib/gemini";
 
 export const projectRouter = createTRPCRouter({
@@ -269,4 +269,23 @@ export const projectRouter = createTRPCRouter({
       },
     });
   }),
+  checkCredits: protectedProcedure
+    .input(
+      z.object({ githubUrl: z.string(), githubToken: z.string().optional() }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const fileCount = await getFileCount(input.githubUrl, input.githubToken);
+      const userCredits = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.user.userId!,
+        },
+        select: {
+          credits: true,
+        },
+      });
+      return {
+        fileCount,
+        userCredits: userCredits?.credits || 0,
+      }
+    }),
 });
