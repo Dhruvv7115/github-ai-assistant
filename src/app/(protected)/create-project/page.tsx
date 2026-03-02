@@ -113,11 +113,8 @@ const CreateProjectPage = () => {
                 !hasEnoughCredits
               }
             >
-              {!!checkCredits.data ? (
-                <span className="flex items-center gap-2">
-                  <Loader2 className="animate-spin" />
-                  Checking Credits...
-                </span>
+              {!checkCredits.data && !checkCredits.isPending ? (
+                "Check Credits"
               ) : checkCredits.isPending ? (
                 <span className="flex items-center gap-2">
                   <Loader2 className="animate-spin" />
