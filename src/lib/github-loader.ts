@@ -3,15 +3,30 @@ import type { Document } from "@langchain/core/documents";
 import { getEmbedding, summarizeCode } from "./gemini";
 import { log } from "console";
 import { db } from "@/server/db";
-// Document {
-//     pageContent: "import { configureStore } from '@reduxjs/toolkit'\nimport authSliceReducer from './authSlice'\nimport postSliceReducer from './postSlice';\n\nconst store = configureStore({\n  reducer: {\n    auth: authSliceReducer,\n    posts: postSliceReducer,\n  }\n});\n\nexport default store",
-//     metadata: {
-//       source: "src/store/store.js",
-//       repository: "https://github.com/dhruvv7115/Blog-App",
-//       branch: "main",
-//     },
-//     id: undefined,
-//   }
+import { Octokit } from "octokit";
+
+export const getFileCount = async (githubUrl: string, githubToken?: string) => {
+  const octokit = new Octokit({
+    auth: githubToken,
+  });
+  const repoOwner = githubUrl.split("/")[3];
+  const repoName = githubUrl.split("/")[4];
+
+  const { data } = await octokit.rest.git.getTree({
+    owner: repoOwner!,
+    repo: repoName!,
+    tree_sha: "main",
+    recursive: "1",
+  });
+
+  const fileCount = data.tree.filter((item) => item.type === "blob").length;
+  return fileCount;
+};
+// console.log(
+//   "file count",
+//   await getFileCount("https://github.com/Dhruvv7115/trading-bot-n8n"),
+// );
+
 export const loadGithubRepo = async (repoUrl: string, githubToken?: string) => {
   const loader = new GithubRepoLoader(repoUrl, {
     branch: "main",
@@ -29,8 +44,7 @@ export const loadGithubRepo = async (repoUrl: string, githubToken?: string) => {
     maxConcurrency: 5,
   });
   const docs = await loader.load();
-  // Filter out .DS_Store files
-  return docs.filter((doc) => !doc.metadata.source?.includes(".DS_Store"));
+  return docs;
 };
 
 export const indexGithubRepo = async (

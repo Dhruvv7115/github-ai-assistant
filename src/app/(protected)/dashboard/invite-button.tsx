@@ -34,7 +34,7 @@ const InviteButton = () => {
               );
               toast.success("Link copied to clipboard");
             }}
-            value={`${window.location.origin}/join/${projectId}`}
+            value={`${window.location.origin || ""}/join/${projectId}`}
           />
         </DialogContent>
       </Dialog>
