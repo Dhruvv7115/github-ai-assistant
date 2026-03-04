@@ -33,7 +33,7 @@ export const CodeReferences = ({ fileReferences }: Props) => {
               className={cn(
                 "text-muted-foreground hover:bg-muted rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
                 {
-                  "bg-primary text-primary-foreground": tab === file.fileName,
+                  "bg-primary text-primary-foreground hover:bg-primary/80": tab === file.fileName,
                 },
               )}
             >
