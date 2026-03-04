@@ -208,6 +208,7 @@ exports.Prisma.StripeTransactionScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   creditsPurchased: 'creditsPurchased',
+  amount: 'amount',
   userId: 'userId'
 };
 

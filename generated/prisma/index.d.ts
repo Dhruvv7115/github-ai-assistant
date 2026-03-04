@@ -10732,10 +10732,12 @@ export namespace Prisma {
 
   export type StripeTransactionAvgAggregateOutputType = {
     creditsPurchased: number | null
+    amount: number | null
   }
 
   export type StripeTransactionSumAggregateOutputType = {
     creditsPurchased: number | null
+    amount: number | null
   }
 
   export type StripeTransactionMinAggregateOutputType = {
@@ -10743,6 +10745,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     creditsPurchased: number | null
+    amount: number | null
     userId: string | null
   }
 
@@ -10751,6 +10754,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     creditsPurchased: number | null
+    amount: number | null
     userId: string | null
   }
 
@@ -10759,6 +10763,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     creditsPurchased: number
+    amount: number
     userId: number
     _all: number
   }
@@ -10766,10 +10771,12 @@ export namespace Prisma {
 
   export type StripeTransactionAvgAggregateInputType = {
     creditsPurchased?: true
+    amount?: true
   }
 
   export type StripeTransactionSumAggregateInputType = {
     creditsPurchased?: true
+    amount?: true
   }
 
   export type StripeTransactionMinAggregateInputType = {
@@ -10777,6 +10784,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     creditsPurchased?: true
+    amount?: true
     userId?: true
   }
 
@@ -10785,6 +10793,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     creditsPurchased?: true
+    amount?: true
     userId?: true
   }
 
@@ -10793,6 +10802,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     creditsPurchased?: true
+    amount?: true
     userId?: true
     _all?: true
   }
@@ -10888,6 +10898,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     creditsPurchased: number
+    amount: number | null
     userId: string
     _count: StripeTransactionCountAggregateOutputType | null
     _avg: StripeTransactionAvgAggregateOutputType | null
@@ -10915,6 +10926,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     creditsPurchased?: boolean
+    amount?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stripeTransaction"]>
@@ -10924,6 +10936,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     creditsPurchased?: boolean
+    amount?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stripeTransaction"]>
@@ -10933,6 +10946,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     creditsPurchased?: boolean
+    amount?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stripeTransaction"]>
@@ -10942,10 +10956,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     creditsPurchased?: boolean
+    amount?: boolean
     userId?: boolean
   }
 
-  export type StripeTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "creditsPurchased" | "userId", ExtArgs["result"]["stripeTransaction"]>
+  export type StripeTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "creditsPurchased" | "amount" | "userId", ExtArgs["result"]["stripeTransaction"]>
   export type StripeTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10966,6 +10981,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       creditsPurchased: number
+      amount: number | null
       userId: string
     }, ExtArgs["result"]["stripeTransaction"]>
     composites: {}
@@ -11395,6 +11411,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"StripeTransaction", 'DateTime'>
     readonly updatedAt: FieldRef<"StripeTransaction", 'DateTime'>
     readonly creditsPurchased: FieldRef<"StripeTransaction", 'Int'>
+    readonly amount: FieldRef<"StripeTransaction", 'Int'>
     readonly userId: FieldRef<"StripeTransaction", 'String'>
   }
     
@@ -11935,6 +11952,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     creditsPurchased: 'creditsPurchased',
+    amount: 'amount',
     userId: 'userId'
   };
 
@@ -12642,6 +12660,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    amount?: IntNullableFilter<"StripeTransaction"> | number | null
     userId?: StringFilter<"StripeTransaction"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -12651,6 +12670,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creditsPurchased?: SortOrder
+    amount?: SortOrderInput | SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -12663,6 +12683,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    amount?: IntNullableFilter<"StripeTransaction"> | number | null
     userId?: StringFilter<"StripeTransaction"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -12672,6 +12693,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creditsPurchased?: SortOrder
+    amount?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: StripeTransactionCountOrderByAggregateInput
     _avg?: StripeTransactionAvgOrderByAggregateInput
@@ -12688,6 +12710,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"StripeTransaction"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"StripeTransaction"> | Date | string
     creditsPurchased?: IntWithAggregatesFilter<"StripeTransaction"> | number
+    amount?: IntNullableWithAggregatesFilter<"StripeTransaction"> | number | null
     userId?: StringWithAggregatesFilter<"StripeTransaction"> | string
   }
 
@@ -13298,6 +13321,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
     user: UserCreateNestedOneWithoutStripeTransactionsInput
   }
 
@@ -13306,6 +13330,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
     userId: string
   }
 
@@ -13314,6 +13339,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutStripeTransactionsNestedInput
   }
 
@@ -13322,6 +13348,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -13330,6 +13357,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
     userId: string
   }
 
@@ -13338,6 +13366,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type StripeTransactionUncheckedUpdateManyInput = {
@@ -13345,6 +13374,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -13904,16 +13934,29 @@ export namespace Prisma {
     meetingId?: SortOrder
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type StripeTransactionCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creditsPurchased?: SortOrder
+    amount?: SortOrder
     userId?: SortOrder
   }
 
   export type StripeTransactionAvgOrderByAggregateInput = {
     creditsPurchased?: SortOrder
+    amount?: SortOrder
   }
 
   export type StripeTransactionMaxOrderByAggregateInput = {
@@ -13921,6 +13964,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creditsPurchased?: SortOrder
+    amount?: SortOrder
     userId?: SortOrder
   }
 
@@ -13929,11 +13973,29 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     creditsPurchased?: SortOrder
+    amount?: SortOrder
     userId?: SortOrder
   }
 
   export type StripeTransactionSumOrderByAggregateInput = {
     creditsPurchased?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type UserToProjectCreateNestedManyWithoutUserInput = {
@@ -14460,6 +14522,14 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutStripeTransactionsNestedInput = {
     create?: XOR<UserCreateWithoutStripeTransactionsInput, UserUncheckedCreateWithoutStripeTransactionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutStripeTransactionsInput
@@ -14669,6 +14739,33 @@ export namespace Prisma {
     _max?: NestedEnumMeetingStatusFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type UserToProjectCreateWithoutUserInput = {
     id?: string
     createdAt?: Date | string
@@ -14728,6 +14825,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
   }
 
   export type StripeTransactionUncheckedCreateWithoutUserInput = {
@@ -14735,6 +14833,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
   }
 
   export type StripeTransactionCreateOrConnectWithoutUserInput = {
@@ -14828,6 +14927,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     updatedAt?: DateTimeFilter<"StripeTransaction"> | Date | string
     creditsPurchased?: IntFilter<"StripeTransaction"> | number
+    amount?: IntNullableFilter<"StripeTransaction"> | number | null
     userId?: StringFilter<"StripeTransaction"> | string
   }
 
@@ -15778,6 +15878,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     creditsPurchased: number
+    amount?: number | null
   }
 
   export type UserToProjectUpdateWithoutUserInput = {
@@ -15836,6 +15937,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type StripeTransactionUncheckedUpdateWithoutUserInput = {
@@ -15843,6 +15945,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type StripeTransactionUncheckedUpdateManyWithoutUserInput = {
@@ -15850,6 +15953,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creditsPurchased?: IntFieldUpdateOperationsInput | number
+    amount?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserToProjectCreateManyProjectInput = {
