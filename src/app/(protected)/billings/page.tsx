@@ -5,6 +5,7 @@ import { createCheckoutSession } from "@/lib/stripe";
 import { api } from "@/trpc/react";
 import { Info } from "lucide-react";
 import React from "react";
+import TransactionHistory from "./transaction-history";
 
 const BillingPage = () => {
   const { data: user } = api.project.getMyCredits.useQuery();
@@ -48,9 +49,9 @@ const BillingPage = () => {
       >
         Buy {creditsToBuyAmount} credits for ${price}
       </Button>
+      <TransactionHistory />
     </div>
   );
 };
 
 export default BillingPage;
-
