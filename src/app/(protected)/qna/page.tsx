@@ -13,6 +13,15 @@ import {
 } from "@/components/ui/sheet";
 import MDEditor from "@uiw/react-md-editor";
 import { CodeReferences } from "../dashboard/code-references";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Bot } from "lucide-react";
 
 const QnaPage = () => {
   const { projectId } = useProjects();
@@ -63,28 +72,42 @@ const QnaPage = () => {
           Saved Questions
         </h3>
         <div className="flex w-full flex-col items-center">
+          {qnas?.length === 0 && (
+            <Empty className="w-full">
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <Bot className="text-muted-foreground" />
+                </EmptyMedia>
+                <EmptyTitle>No Q&As Yet</EmptyTitle>
+                <EmptyDescription>
+                  You haven&apos;t asked any questions yet. Get started by
+                  asking a question.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          )}
           {qnas?.map((qna, index) => (
             <SheetTrigger
               key={index}
               className="flex w-full items-center gap-4 rounded-lg border p-4 shadow-md"
             >
-              <div className="flex items-center justify-center w-fit">
+              <div className="flex w-fit items-center justify-center">
                 <img
                   src={qna?.user?.imageUrl ?? ""}
                   alt="user avatar"
                   className="h-12 w-12 rounded-full"
                 />
               </div>
-              <div className="max-w-xl md:max-w-3xl lg:max-w-5xl w-full">
+              <div className="w-full max-w-xl md:max-w-3xl lg:max-w-5xl">
                 <div className="flex items-center justify-start gap-2">
-                  <p className="line-clamp-1 text-lg font-medium text-black/80 text-start">
+                  <p className="line-clamp-1 text-start text-lg font-medium text-black/80">
                     {qna?.question}
                   </p>
                   <Badge variant="outline" className="text-xs text-black/40">
                     about {timeAgo(qna?.createdAt)}
                   </Badge>
                 </div>
-                <p className="line-clamp-1 text-sm text-black/60 text-start">
+                <p className="line-clamp-1 text-start text-sm text-black/60">
                   {qna?.answer}
                 </p>
               </div>
@@ -95,7 +118,9 @@ const QnaPage = () => {
       {question && (
         <SheetContent className="sm:max-w-[80vw]">
           <SheetHeader className="flex gap-4">
-            <SheetTitle className="text-xl font-bold">{question?.question}</SheetTitle>
+            <SheetTitle className="text-xl font-bold">
+              {question?.question}
+            </SheetTitle>
             <MDEditor.Markdown
               source={question?.answer}
               style={{ backgroundColor: "white", color: "black" }}
