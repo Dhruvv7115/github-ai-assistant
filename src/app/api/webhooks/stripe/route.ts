@@ -73,6 +73,7 @@ async function fulfillCheckout(session: Stripe.Checkout.Session) {
       data: {
         userId,
         creditsPurchased: credits,
+        amount: credits / 50,
       },
     });
     await db.user.update({
