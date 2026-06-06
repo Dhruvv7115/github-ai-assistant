@@ -1,29 +1,98 @@
-# Create T3 App
+# GitHub AI Assistant
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+An AI-powered tool that lets you chat with any GitHub repository. Paste a repo link, and the assistant scrapes, indexes, and embeds the entire codebase — then answers your questions about it, returns the most relevant files, and even summarizes your team meetings.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+### 🔍 Repo Q&A
+- Paste any public GitHub repo URL
+- The repo is loaded via LangChain, summarized, and embedded using pgvector
+- Ask anything about the codebase — architecture, logic, specific files
+- Every response includes the **5 most relevant files** to your query
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### 👥 Team Collaboration
+- Invite multiple collaborators to the same repo workspace
+- Full invite system — share access with your team
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### 🎙️ Meeting Intelligence
+- Upload meeting recordings directly to the platform
+- Powered by **AssemblyAI** — get AI-generated summaries with chapters
+- Keep your repo context and meeting notes in one place
 
-## Learn More
+### 💳 Token-Based Usage
+- AI usage is powered by a token system
+- Buy tokens directly in the app
+- **Full Stripe integration** — test payments implemented end to end
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Tech Stack
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+| Layer | Technology |
+|---|---|
+| Framework | Next.js (T3 Stack) |
+| Language | TypeScript |
+| Auth | NextAuth.js |
+| ORM | Prisma |
+| Database | PostgreSQL (Neon) |
+| Vector Store | pgvector |
+| AI / RAG | LangChain |
+| Meeting AI | AssemblyAI |
+| Payments | Stripe |
+| Styling | Tailwind CSS + ShadCN UI |
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Getting Started
 
-## How do I deploy this?
+### Prerequisites
+- Node.js 18+
+- PostgreSQL database with pgvector extension enabled
+- API keys for your LLM provider, AssemblyAI, and Stripe
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Setup
+
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/dhruvv7115/github-ai-assistant
+   cd github-ai-assistant
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   Fill in all required values in `.env`.
+
+4. **Set up the database**
+   ```bash
+   # Enable pgvector in your Postgres instance first
+   # Then run:
+   npx prisma db push
+   ```
+
+5. **Start the dev server**
+   ```bash
+   npm run dev
+   ```
+
+## Environment Variables
+
+See `.env.example` for the full list of required environment variables including database, LLM, AssemblyAI, and Stripe credentials.
+
+## How It Works
+
+1. User submits a GitHub repo URL
+2. LangChain crawls and loads all files from the repo
+3. Files are chunked, embedded, and stored in pgvector
+4. A summary of the repo is generated and saved
+5. On each query, relevant chunks are retrieved via similarity search
+6. The LLM answers using the retrieved context and returns the top 5 related files
+
+## Deployment
+
+- **Frontend + API**: [Vercel](https://vercel.com)
+- **Database + pgvector**: [Neon](https://neon.tech)
+
+See the [T3 deployment guides](https://create.t3.gg/en/deployment/vercel) for detailed instructions.
