@@ -1,6 +1,6 @@
 import { db } from "@/server/db";
 import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(req: NextRequest) {
   console.log("Webhook called");
   const payload = await req.text();
-  const sig = (await headers()).get("stripe-signature") as string;
+  const sig = (await headers()).get("stripe-signature")! as string;
 
   let event: Stripe.Event;
   try {
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     );
   } catch (err: any) {
     console.log(err.message);
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
   if (!event) {
     return;
@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
     event.type === "checkout.session.completed" ||
     event.type === "checkout.session.async_payment_succeeded"
   ) {
-    fulfillCheckout(event.data.object);
+    await fulfillCheckout(event.data.object);
   }
 
-  return NextResponse.json(
+  return Response.json(
     { message: "Credits added successfully" },
     { status: 200 },
   );
@@ -61,10 +61,10 @@ async function fulfillCheckout(session: Stripe.Checkout.Session) {
     // TODO: Perform fulfillment of the line items
     // TODO: Record/save fulfillment status for this
     // Checkout Session
-    const credits = Number(session.metadata?.["credits"]);
+    const credits = Number(session.metadata?.credits);
     const userId = session.client_reference_id;
     if (!userId || !credits) {
-      return NextResponse.json({
+      return Response.json({
         message: "Missing userId or credits",
         status: 400,
       });

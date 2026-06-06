@@ -5,7 +5,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupAction,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
@@ -15,16 +14,12 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useProjects } from "@/hooks/use-projects";
-import { useRefetch } from "@/hooks/use-refetch";
 import { cn } from "@/lib/utils";
-import { api } from "@/trpc/react";
 import {
   Bot,
   CreditCard,
-  GitBranch,
   Github,
   LayoutDashboard,
-  Loader2,
   Plus,
   Presentation,
 } from "lucide-react";

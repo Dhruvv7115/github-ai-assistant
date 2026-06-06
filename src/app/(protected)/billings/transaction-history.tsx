@@ -1,6 +1,5 @@
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -40,7 +39,7 @@ const TransactionHistory = () => {
             <div className="flex w-full items-center justify-between">
               <div className="flex items-center gap-2">
                 <img
-                  src={transaction?.user?.imageUrl || ""}
+                  src={transaction?.user?.imageUrl ?? ""}
                   alt="user avatar"
                   className="h-12 w-12 rounded-full"
                 />

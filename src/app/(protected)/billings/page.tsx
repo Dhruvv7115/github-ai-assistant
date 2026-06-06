@@ -42,8 +42,8 @@ const BillingPage = () => {
         className="mt-4"
       />
       <Button
-        onClick={() => {
-          createCheckoutSession(creditsToBuyAmount);
+        onClick={async () => {
+          await createCheckoutSession(creditsToBuyAmount);
         }}
         className="mt-4 w-fit"
       >

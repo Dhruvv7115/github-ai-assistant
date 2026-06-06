@@ -1,7 +1,6 @@
 "use client";
 
 import { useProjects } from "@/hooks/use-projects";
-import { useUser } from "@clerk/nextjs";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import React from "react";

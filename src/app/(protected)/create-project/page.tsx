@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 import React from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useForm, type SubmitHandler } from "react-hook-form";

@@ -1,9 +1,8 @@
 import { processMeeting } from "@/lib/assembly";
 import { db } from "@/server/db";
 import { auth } from "@clerk/nextjs/server";
-import { log } from "console";
 import { NextResponse, type NextRequest } from "next/server";
-import z, { includes } from "zod";
+import z from "zod";
 
 const bodySchema = z.object({
   meetingUrl: z.string(),
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
     });
   }
   const body = await req.json();
-  const { meetingUrl, projectId, meetingId } = bodySchema.parse(body);
+  const { meetingUrl, meetingId } = bodySchema.parse(body);
 
   try {
     const { summaries } = await processMeeting(meetingUrl);
@@ -62,7 +61,7 @@ export async function POST(req: NextRequest) {
       status: 200,
       issues,
     });
-  } catch (error: any) {
+  } catch (error: Error | any) {
     console.log(error.message);
     return NextResponse.json({
       message: "Error in processing meeting",

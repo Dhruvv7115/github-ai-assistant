@@ -28,8 +28,8 @@ const InviteButton = () => {
           <Input
             className="mt-4"
             readOnly
-            onClick={() => {
-              navigator.clipboard.writeText(
+            onClick={async () => {
+              await navigator.clipboard.writeText(
                 `${typeof window !== "undefined" ? window.location.origin : ""}/join/${projectId}`,
               );
               toast.success("Link copied to clipboard");

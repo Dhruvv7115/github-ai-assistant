@@ -11,11 +11,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import {
-  Loader2,
-  Presentation,
-  Upload,
-} from "lucide-react";
+import { Loader2, Presentation, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -23,8 +19,7 @@ import { toast } from "sonner";
 import { useRefetch } from "@/hooks/use-refetch";
 
 const MeetingsPage = () => {
-  const { project, projectId } = useProjects();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { projectId } = useProjects();
   const deleteMeeting = api.project.deleteMeeting.useMutation();
   const refetch = useRefetch();
 
@@ -41,8 +36,7 @@ const MeetingsPage = () => {
       <MeetingCard />
       <div className="flex w-full flex-col items-start justify-center gap-2">
         <h1 className="text-xl font-semibold text-black/80">Meetings</h1>
-        {isLoading && <p>Loading...</p>}
-        {!isLoading && meetings && meetings.length === 0 && (
+        {meetings && meetings.length === 0 && (
           <Empty className="w-full">
             <EmptyHeader>
               <EmptyMedia variant="icon">
