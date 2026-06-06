@@ -39,7 +39,7 @@ export const getAiSummary = async (diff: string): Promise<string> => {
       ${diff}`,
     ],
   });
-  return response.text || "";
+  return response.text ?? "";
 };
 
 // await getAiSummary(`diff --git a/apps/client/src/pages/CreateWorkflow.tsx b/apps/client/src/pages/CreateWorkflow.tsx
@@ -73,7 +73,7 @@ export const summarizeCode = async (doc: Document) => {
       ],
     });
 
-    return response.text || "";
+    return response.text ?? "";
   } catch (error) {
     return "";
   }

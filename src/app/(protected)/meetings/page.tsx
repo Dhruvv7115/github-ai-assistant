@@ -36,7 +36,7 @@ const MeetingsPage = () => {
       <MeetingCard />
       <div className="flex w-full flex-col items-start justify-center gap-2">
         <h1 className="text-xl font-semibold text-black/80">Meetings</h1>
-        {meetings && meetings.length === 0 && (
+        {meetings && meetings?.length === 0 && (
           <Empty className="w-full">
             <EmptyHeader>
               <EmptyMedia variant="icon">

@@ -22,7 +22,7 @@ const JoinProjectPage = async ({ params }: Props) => {
     await db.user.create({
       data: {
         id: userId,
-        email: user.emailAddresses[0]?.emailAddress || "",
+        email: user.emailAddresses[0]?.emailAddress ?? "",
         firstName: user.firstName,
         lastName: user.lastName,
         imageUrl: user.imageUrl,

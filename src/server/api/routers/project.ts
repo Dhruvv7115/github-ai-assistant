@@ -311,7 +311,7 @@ export const projectRouter = createTRPCRouter({
       });
       return {
         fileCount,
-        userCredits: userCredits?.credits || 0,
+        userCredits: userCredits?.credits ?? 0,
       };
     }),
   getUserTransactions: protectedProcedure.query(async ({ ctx }) => {

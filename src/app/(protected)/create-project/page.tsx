@@ -34,7 +34,7 @@ const CreateProjectPage = () => {
         {
           onSuccess: () => {
             toast.success("Project created successfully");
-            refetch();
+            void refetch();
             reset();
             router.push("/dashboard");
           },

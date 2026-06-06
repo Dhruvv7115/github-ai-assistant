@@ -31,7 +31,7 @@ export const loadGithubRepo = async (repoUrl: string, githubToken?: string) => {
   const loader = new GithubRepoLoader(repoUrl, {
     branch: "main",
     recursive: true,
-    accessToken: githubToken || "",
+    accessToken: githubToken ?? "",
     ignoreFiles: [
       "**/.DS_Store",
       "**/yarn.lock",
@@ -103,8 +103,8 @@ const generateEmbeddings = async (docs: Document[]) => {
     embeddings.push({
       summary,
       embedding,
-      sourceCode: JSON.parse(JSON.stringify(doc.pageContent)),
-      fileName: doc.metadata.source,
+      sourceCode: JSON.parse(JSON.stringify(doc.pageContent)) as string,
+      fileName: doc.metadata.source as string,
     });
   }
   return embeddings;

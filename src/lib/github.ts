@@ -27,8 +27,8 @@ export const getCommitHashes = async (
 
   const sortedCommits = data.sort(
     (a, b) =>
-      new Date(b.commit.author?.date || "").getTime() -
-      new Date(a.commit.author?.date || "").getTime(),
+      new Date(b.commit.author?.date ?? "").getTime() -
+      new Date(a.commit.author?.date ?? "").getTime(),
   );
 
   return sortedCommits.slice(0, 3).map((commit) => ({

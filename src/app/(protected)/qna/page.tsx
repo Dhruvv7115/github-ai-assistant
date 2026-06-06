@@ -15,7 +15,6 @@ import MDEditor from "@uiw/react-md-editor";
 import { CodeReferences } from "../dashboard/code-references";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
