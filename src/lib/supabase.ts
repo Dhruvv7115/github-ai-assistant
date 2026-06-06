@@ -26,5 +26,3 @@ export async function uploadFileToSupabase(file: File, userId: string) {
     return data.publicUrl;
   }
 }
-// const file = new File(["hello"], "hello.txt", { type: "text/plain" });
-// uploadFile(file, "1");

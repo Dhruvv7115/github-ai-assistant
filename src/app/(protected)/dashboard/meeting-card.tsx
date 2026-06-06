@@ -55,7 +55,7 @@ const MeetingCard = () => {
       if (!file) return;
       const publicUrl = await uploadFileToSupabase(
         file as File,
-        user?.id as string,
+        user?.id!,
       );
       uploadMeeting.mutate(
         {

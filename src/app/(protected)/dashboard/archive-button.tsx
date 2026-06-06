@@ -6,10 +6,10 @@ import { api } from "@/trpc/react";
 import React from "react";
 import { toast } from "sonner";
 
-const ArchiveButton = async () => {
+const ArchiveButton = () => {
   const { projectId } = useProjects();
   const archiveProject = api.project.archiveProject.useMutation();
-  const refetch = await useRefetch();
+  const refetch = useRefetch();
   return (
     <Button
       variant="outline"

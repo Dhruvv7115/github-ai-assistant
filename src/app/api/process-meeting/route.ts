@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
       status: 200,
       issues,
     });
-  } catch (error: Error | any) {
+  } catch (error: any) {
     console.log(error.message);
     return NextResponse.json({
       message: "Error in processing meeting",

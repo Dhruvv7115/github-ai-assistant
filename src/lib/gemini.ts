@@ -75,6 +75,7 @@ export const summarizeCode = async (doc: Document) => {
 
     return response.text ?? "";
   } catch (error) {
+    console.log(error);
     return "";
   }
 };

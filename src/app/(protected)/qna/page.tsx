@@ -27,8 +27,7 @@ const QnaPage = () => {
   const { data: qnas } = api.project.getQnas.useQuery({
     projectId,
   });
-  const [questionIndex, setQuestionIndex] = React.useState<number>(0);
-  const question = qnas?.[questionIndex];
+  const question = qnas?.[0];
 
   function timeAgo(date: Date | string | number): string {
     const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });

@@ -1,7 +1,6 @@
 import { GithubRepoLoader } from "@langchain/community/document_loaders/web/github";
 import type { Document } from "@langchain/core/documents";
 import { getEmbedding, summarizeCode } from "./gemini";
-import { log } from "console";
 import { db } from "@/server/db";
 import { Octokit } from "octokit";
 
